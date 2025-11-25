@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indo-Madura Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Indo-Madura Translator</h1>
+            <p>Translate untuk Bahasa Indonesia dan Madura dengan mudah.</p>
+        </header>
+
+        <main>
+            <div class="translation-box">
+                <div class="controls">
+                    <select id="direction">
+                        <option value="id_to_mad">Indonesia &rarr; Madura</option>
+                        <option value="mad_to_id">Madura &rarr; Indonesia</option>
+                    </select>
+                </div>
+
+                <div class="input-area">
+                    <textarea id="inputText" placeholder="Masukkan teks di sini..."></textarea>
+                </div>
+
+                <div class="action-area">
+                    <button id="translateBtn">Translate</button>
+                </div>
+
+                <div class="output-area">
+                    <textarea id="outputText" readonly placeholder="Terjemahan akan muncul di sini..."></textarea>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 NLP Project Group I</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('translateBtn').addEventListener('click', async () => {
+            const text = document.getElementById('inputText').value;
+            const direction = document.getElementById('direction').value;
+            const outputText = document.getElementById('outputText');
+            const btn = document.getElementById('translateBtn');
+
+            if (!text.trim()) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Translating...';
+            outputText.value = 'Translating...';
+
+            try {
+                const response = await fetch('/translate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text, direction }),
+                });
+
+                const data = await response.json();
+                outputText.value = data.translated_text;
+            } catch (error) {
+                console.error('Error:', error);
+                outputText.value = 'Error occurred during translation.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Translate';
+            }
+        });
+    </script>
+</body>
+
+</html>
