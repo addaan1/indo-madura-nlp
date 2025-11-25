@@ -6,33 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indo-Madura Translator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Add some icons -->
+    <!-- Fonts: Rajdhani for Tech/Cyberpunk feel, Orbitron for headers -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-    </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <i class="fa-solid fa-robot"></i>
+            <span>NLP PROJECT</span>
+        </div>
+        <div class="nav-links">
+            <a href="#landing">Home</a>
+            <a href="#app-section">Translator</a>
+            <a href="#" class="nav-btn">About</a>
+        </div>
+    </nav>
 
-    <div class="container">
-        <header>
-            <div class="logo-area">
-                <i class="fa-solid fa-language logo-icon"></i>
-                <h1>Indo-Madura Translator</h1>
+    <!-- Landing Section -->
+    <section id="landing" class="landing-section">
+        <div class="landing-content">
+            <div class="badge">:: OUR ECOSYSTEM</div>
+            <h1 class="hero-title">
+                UNLEASH THE POWER OF <br>
+                <span class="gradient-text">Indo-Madura</span> <br>
+                <span class="outlined-text">TRANSLATION</span>
+            </h1>
+
+            <div class="hero-description-box">
+                <div class="line-decoration"></div>
+                <p class="hero-description">
+                    "Bangun Jembatan Bahasa Indonesia dan Madura Lewat Model AI"
+                    <br><br>
+                    Proyek ini dibuat untuk menjembatani komunikasi antara Bahasa Indonesia dan Bahasa Madura
+                    menggunakan teknologi Neural Machine Translation tercanggih.
+                </p>
             </div>
-            <p>Terjemahkan Bahasa Indonesia ke Madura (dan sebaliknya) dengan mudah.</p>
-        </header>
 
-        <main>
+            <button class="launch-btn"
+                onclick="document.getElementById('app-section').scrollIntoView({behavior: 'smooth'})">
+                :: LAUNCH APP
+            </button>
+        </div>
+
+        <!-- Decorative Background Elements -->
+        <div class="grid-bg"></div>
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </section>
+
+    <!-- App Section -->
+    <section id="app-section" class="app-section">
+        <div class="container">
+            <header class="app-header">
+                <div class="logo-area">
+                    <i class="fa-solid fa-language logo-icon"></i>
+                    <h2>MODUL TRANSLASI</h2>
+                </div>
+            </header>
+
             <div class="glass-card">
+                <!-- Controls -->
                 <div class="controls">
                     <div class="select-wrapper">
                         <select id="direction">
-                            <option value="id_to_mad">Indonesia &rarr; Madura</option>
-                            <option value="mad_to_id">Madura &rarr; Indonesia</option>
+                            <option value="id_to_mad">INDONESIA &rarr; MADURA</option>
+                            <option value="mad_to_id">MADURA &rarr; INDONESIA</option>
                         </select>
                         <i class="fa-solid fa-chevron-down select-icon"></i>
                     </div>
@@ -42,41 +85,45 @@
                     <!-- Input Section -->
                     <div class="text-area-wrapper input-wrapper">
                         <div class="area-header">
-                            <span class="label">Input</span>
+                            <span class="label">:: INPUT DATA</span>
                             <button id="micBtn" class="icon-btn" title="Rekam Suara">
                                 <i class="fa-solid fa-microphone"></i>
                             </button>
                         </div>
-                        <textarea id="inputText" placeholder="Ketik atau rekam suara di sini..."></textarea>
+                        <textarea id="inputText" placeholder="Masukkan teks atau merekam suara..."></textarea>
                         <div class="char-count">0 chars</div>
+                        <div class="corner-decoration top-left"></div>
+                        <div class="corner-decoration bottom-right"></div>
                     </div>
 
-                    <!-- Action Section (Desktop: Center, Mobile: Middle) -->
+                    <!-- Action Section -->
                     <div class="action-wrapper">
                         <button id="translateBtn" class="primary-btn">
-                            <span>Terjemahkan</span>
-                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                            <span>TERJEMAHKAN</span>
+                            <i class="fa-solid fa-bolt"></i>
                         </button>
                     </div>
 
                     <!-- Output Section -->
                     <div class="text-area-wrapper output-wrapper">
                         <div class="area-header">
-                            <span class="label">Output</span>
+                            <span class="label">:: OUTPUT DATA</span>
                             <button id="copyBtn" class="icon-btn" title="Salin Teks">
                                 <i class="fa-regular fa-copy"></i>
                             </button>
                         </div>
                         <textarea id="outputText" readonly placeholder="Hasil terjemahan..."></textarea>
+                        <div class="corner-decoration top-right"></div>
+                        <div class="corner-decoration bottom-left"></div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </section>
 
-        <footer>
-            <p>&copy; 2025 NLP Project Group I | Powered by Transformers & Whisper</p>
-        </footer>
-    </div>
+    <footer>
+        <p>&copy; 2025 NLP PROJECT KELOMPOK I | TEKNOLOGI SAINS DATA UNIVERSITAS AIRLANGGA</p>
+    </footer>
 
     <script>
         // --- UI Interactions ---
@@ -109,6 +156,8 @@
             btn.disabled = true;
             btn.classList.add('loading');
             outputText.classList.add('pulse');
+            const originalText = btn.querySelector('span').textContent;
+            btn.querySelector('span').textContent = "PROCESSING...";
 
             try {
                 const response = await fetch('/translate', {
@@ -126,6 +175,7 @@
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 outputText.classList.remove('pulse');
+                btn.querySelector('span').textContent = originalText;
             }
         });
 
@@ -148,15 +198,13 @@
                     mediaRecorder.onstop = async () => {
                         const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                         await sendAudioToServer(audioBlob);
-
-                        // Stop all tracks to release mic
                         stream.getTracks().forEach(track => track.stop());
                     };
 
                     mediaRecorder.start();
                     micBtn.classList.add('recording');
-                    micIcon.className = 'fa-solid fa-stop'; // Change icon to Stop
-                    inputText.placeholder = "Mendengarkan...";
+                    micIcon.className = 'fa-solid fa-stop';
+                    inputText.placeholder = "Listening...";
                 } catch (err) {
                     console.error("Error accessing microphone:", err);
                     alert("Gagal mengakses mikrofon. Pastikan izin diberikan.");
@@ -165,8 +213,8 @@
                 // Stop Recording
                 mediaRecorder.stop();
                 micBtn.classList.remove('recording');
-                micIcon.className = 'fa-solid fa-microphone'; // Change icon back to Mic
-                inputText.placeholder = "Memproses audio...";
+                micIcon.className = 'fa-solid fa-microphone';
+                inputText.placeholder = "Processing audio...";
             }
         });
 
@@ -174,7 +222,7 @@
             const formData = new FormData();
             formData.append('audio', audioBlob, 'recording.webm');
 
-            inputText.value = "Sedang mentranskripsi...";
+            inputText.value = "Transcribing audio...";
             inputText.disabled = true;
 
             try {
@@ -186,17 +234,16 @@
                 const data = await response.json();
                 if (data.transcribed_text) {
                     inputText.value = data.transcribed_text;
-                    // Trigger input event to update char count
                     inputText.dispatchEvent(new Event('input'));
                 } else {
-                    inputText.value = "Gagal mentranskripsi.";
+                    inputText.value = "Transcription failed.";
                 }
             } catch (error) {
                 console.error('Error uploading audio:', error);
                 inputText.value = "Error uploading audio.";
             } finally {
                 inputText.disabled = false;
-                inputText.placeholder = "Ketik atau rekam suara di sini...";
+                inputText.placeholder = "Masukkan teks atau merekam suara...";
             }
         }
     </script>
