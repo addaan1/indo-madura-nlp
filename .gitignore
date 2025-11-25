@@ -7,3 +7,7 @@ env/
 venv/
 *.pth
 *.pkl
+
+# Ignore large model directories
+Project_Madura/model_indo_ke_madura/
+Project_Madura/model_madura_ke_indo/
