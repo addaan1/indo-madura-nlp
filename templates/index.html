@@ -6,63 +6,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indo-Madura Translator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add some icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
     <div class="container">
         <header>
-            <h1>Indo-Madura Translator</h1>
-            <p>Translate untuk Bahasa Indonesia dan Madura dengan mudah.</p>
+            <div class="logo-area">
+                <i class="fa-solid fa-language logo-icon"></i>
+                <h1>Indo-Madura Translator</h1>
+            </div>
+            <p>Terjemahkan Bahasa Indonesia ke Madura (dan sebaliknya) dengan mudah.</p>
         </header>
 
         <main>
-            <div class="translation-box">
+            <div class="glass-card">
                 <div class="controls">
-                    <select id="direction">
-                        <option value="id_to_mad">Indonesia &rarr; Madura</option>
-                        <option value="mad_to_id">Madura &rarr; Indonesia</option>
-                    </select>
+                    <div class="select-wrapper">
+                        <select id="direction">
+                            <option value="id_to_mad">Indonesia &rarr; Madura</option>
+                            <option value="mad_to_id">Madura &rarr; Indonesia</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-icon"></i>
+                    </div>
                 </div>
 
-                <div class="input-area">
-                    <textarea id="inputText" placeholder="Masukkan teks di sini..."></textarea>
-                </div>
+                <div class="translation-grid">
+                    <!-- Input Section -->
+                    <div class="text-area-wrapper input-wrapper">
+                        <div class="area-header">
+                            <span class="label">Input</span>
+                            <button id="micBtn" class="icon-btn" title="Rekam Suara">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+                        </div>
+                        <textarea id="inputText" placeholder="Ketik atau rekam suara di sini..."></textarea>
+                        <div class="char-count">0 chars</div>
+                    </div>
 
-                <div class="action-area">
-                    <button id="translateBtn">Translate</button>
-                </div>
+                    <!-- Action Section (Desktop: Center, Mobile: Middle) -->
+                    <div class="action-wrapper">
+                        <button id="translateBtn" class="primary-btn">
+                            <span>Translate</span>
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </button>
+                    </div>
 
-                <div class="output-area">
-                    <textarea id="outputText" readonly placeholder="Terjemahan akan muncul di sini..."></textarea>
+                    <!-- Output Section -->
+                    <div class="text-area-wrapper output-wrapper">
+                        <div class="area-header">
+                            <span class="label">Output</span>
+                            <button id="copyBtn" class="icon-btn" title="Salin Teks">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </div>
+                        <textarea id="outputText" readonly placeholder="Hasil terjemahan..."></textarea>
+                    </div>
                 </div>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2025 NLP Project Group I</p>
+            <p>&copy; 2025 NLP Project Group I | Powered by Transformers & Whisper</p>
         </footer>
     </div>
 
     <script>
+        // --- UI Interactions ---
+        const inputText = document.getElementById('inputText');
+        const charCount = document.querySelector('.char-count');
+
+        inputText.addEventListener('input', () => {
+            charCount.textContent = `${inputText.value.length} chars`;
+        });
+
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const outputText = document.getElementById('outputText');
+            if (outputText.value) {
+                navigator.clipboard.writeText(outputText.value);
+                alert('Teks disalin!');
+            }
+        });
+
+        // --- Translation Logic ---
         document.getElementById('translateBtn').addEventListener('click', async () => {
             const text = document.getElementById('inputText').value;
             const direction = document.getElementById('direction').value;
             const outputText = document.getElementById('outputText');
             const btn = document.getElementById('translateBtn');
+            const btnIcon = btn.querySelector('i');
 
             if (!text.trim()) return;
 
+            // Loading State
             btn.disabled = true;
-            btn.textContent = 'Translating...';
-            outputText.value = 'Translating...';
+            btn.classList.add('loading');
+            outputText.classList.add('pulse');
 
             try {
                 const response = await fetch('/translate', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text, direction }),
                 });
 
@@ -73,9 +124,81 @@
                 outputText.value = 'Error occurred during translation.';
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Translate';
+                btn.classList.remove('loading');
+                outputText.classList.remove('pulse');
             }
         });
+
+        // --- Audio Recording Logic ---
+        const micBtn = document.getElementById('micBtn');
+        const micIcon = micBtn.querySelector('i');
+        let mediaRecorder;
+        let audioChunks = [];
+
+        micBtn.addEventListener('click', async () => {
+            if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+                // Start Recording
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+
+                    mediaRecorder.onstop = async () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        await sendAudioToServer(audioBlob);
+
+                        // Stop all tracks to release mic
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    micBtn.classList.add('recording');
+                    micIcon.className = 'fa-solid fa-stop'; // Change icon to Stop
+                    inputText.placeholder = "Mendengarkan...";
+                } catch (err) {
+                    console.error("Error accessing microphone:", err);
+                    alert("Gagal mengakses mikrofon. Pastikan izin diberikan.");
+                }
+            } else {
+                // Stop Recording
+                mediaRecorder.stop();
+                micBtn.classList.remove('recording');
+                micIcon.className = 'fa-solid fa-microphone'; // Change icon back to Mic
+                inputText.placeholder = "Memproses audio...";
+            }
+        });
+
+        async function sendAudioToServer(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.webm');
+
+            inputText.value = "Sedang mentranskripsi...";
+            inputText.disabled = true;
+
+            try {
+                const response = await fetch('/transcribe', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.transcribed_text) {
+                    inputText.value = data.transcribed_text;
+                    // Trigger input event to update char count
+                    inputText.dispatchEvent(new Event('input'));
+                } else {
+                    inputText.value = "Gagal mentranskripsi.";
+                }
+            } catch (error) {
+                console.error('Error uploading audio:', error);
+                inputText.value = "Error uploading audio.";
+            } finally {
+                inputText.disabled = false;
+                inputText.placeholder = "Ketik atau rekam suara di sini...";
+            }
+        }
     </script>
 </body>
 

@@ -60,3 +60,35 @@ class Translator:
 
 # Singleton instance
 translator = Translator()
+
+import whisper
+
+class Transcriber:
+    def __init__(self):
+        try:
+            print("Loading Whisper model (base)...")
+            self.model = whisper.load_model("base")
+            print("Whisper model loaded successfully.")
+        except Exception as e:
+            print(f"Error loading Whisper model: {e}")
+            self.model = None
+
+    def transcribe_audio(self, file_path):
+        """
+        Transcribes audio file to text using Whisper.
+        Args:
+            file_path (str): Path to the audio file.
+        Returns:
+            str: Transcribed text.
+        """
+        if not self.model:
+            return "Error: Whisper model not loaded."
+        
+        try:
+            result = self.model.transcribe(file_path)
+            return result["text"].strip()
+        except Exception as e:
+            return f"Error during transcription: {e}"
+
+# Singleton instance
+transcriber = Transcriber()
