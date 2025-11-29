@@ -953,13 +953,13 @@ textarea::placeholder {
     .about-text {
         padding: 25px !important;
     }
-    
+
     .visual-circle {
         width: 150px;
         height: 150px;
         font-size: 3rem;
     }
-    
+
     .translator-card {
         padding: 30px 20px;
     }

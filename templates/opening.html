@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madura-Indonesia Translation - Opening</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='opening.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Main Canvas -->
+    <canvas id="mainCanvas"></canvas>
+
+    <!-- Loading Bar Container -->
+    <div id="loadingContainer" class="loading-container">
+        <div class="loading-content">
+            <h1 class="loading-title">MADURA - INDONESIA</h1>
+            <p class="loading-subtitle">Menyatukan Bahasa, Merajut Nusantara</p>
+
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar">
+                    <div class="loading-progress" id="loadingProgress"></div>
+                    <div class="loading-glow"></div>
+                </div>
+                <div class="loading-percentage" id="loadingPercentage">0%</div>
+            </div>
+
+            <p class="loading-text">Memuat pengalaman budaya...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/opening.js') }}"></script>
+</body>
+
+</html>

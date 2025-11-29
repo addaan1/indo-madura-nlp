@@ -6,6 +6,10 @@ import tempfile
 app = Flask(__name__)
 
 @app.route('/')
+def opening():
+    return render_template('opening.html')
+
+@app.route('/main')
 def index():
     return render_template('index.html')
 
