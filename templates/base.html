@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Indo-Madura Translator{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Fonts: Philosopher for Headers, Lato for Body -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Philosopher:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <i class="fa-solid fa-robot"></i>
+            <span>NLP PROJECT</span>
+        </div>
+        <div class="theme-switch-wrapper">
+            <span class="theme-label">Mode Gelap</span>
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+            <span class="theme-label">Mode Terang</span>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}#landing">Home</a>
+            <a href="{{ url_for('index') }}#app-section">Translator</a>
+            <a href="{{ url_for('index') }}#about-section" class="nav-btn">About</a>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p>&copy; 2025 NLP PROJECT KELOMPOK I | TEKNOLOGI SAINS DATA UNIVERSITAS AIRLANGGA</p>
+    </footer>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+        const htmlElement = document.documentElement;
+
+        function switchTheme(e) {
+            if (e.target.checked) {
+                htmlElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                htmlElement.removeAttribute('data-theme');
+            }
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+
+        // Check local storage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            htmlElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'light') {
+                toggleSwitch.checked = true;
+            }
+        }
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
