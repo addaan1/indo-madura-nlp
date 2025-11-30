@@ -9,7 +9,7 @@
 **Warisan Nusantara** is a web-based application designed to preserve and promote the Madurese language and culture. At its core, it features a **Neural Machine Translation (NMT)** model capable of translating between **Indonesian** and **Madura** language (both directions).
 
 Beyond translation, the application serves as a digital cultural showcase, featuring:
-- **Interactive 3D Visuals**: A modern, particle-based 3D scene representing Madura's geography and cultural artifacts.
+- **Interactive 3D Visuals**: A modern, particle-based 3D scene.
 - **Cultural Insights**: Information about Madura's history, traditions (Karapan Sapi, Batik), and language structure.
 - **Speech Integration**: Speech-to-Text (STT) capabilities to make the tool more accessible.
 

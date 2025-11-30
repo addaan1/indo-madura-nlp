@@ -190,7 +190,6 @@ input:checked+.slider:before {
     transform: translateX(24px);
 }
 
-/* --- Landing Section --- */
 .landing-section {
     height: 100vh;
     display: flex;
@@ -201,7 +200,7 @@ input:checked+.slider:before {
     /* Bright, welcoming background */
     background: linear-gradient(to bottom, rgba(10, 14, 26, 0.7), rgba(10, 14, 26, 0.85)), url('images/madura_landscape_hero.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center 75%;
     background-attachment: fixed;
 }
 
@@ -1034,7 +1033,7 @@ footer {
     text-align: center;
     color: #888;
     font-size: 0.9rem;
-    padding: 40px;
+    padding: 20px;
     background: #020101;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
