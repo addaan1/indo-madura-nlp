@@ -1,20 +1,22 @@
 :root {
-    /* Traditional Madura Colors (Garuda Pancasila inspired) */
-    --color-red: #8B0000;
-    --color-gold: #D4AF37;
-    --color-green: #006400;
-    --color-cream: #F4F1EA;
-    --color-brown: #3E2723;
-    --color-black: #0a0a0a;
+    /* Vibrant Madura Colors (Modern & Bright) */
+    --color-red: #FF6B6B;
+    --color-gold: #FFB800;
+    --color-gold-light: #FFC107;
+    --color-green: #4CAF50;
+    --color-cream: #FFF9F0;
+    --color-brown: #8D6E63;
+    --color-black: #1a1a1a;
 
     /* Functional Colors */
-    --bg-color: #050202;
-    /* Deepest dark red/black */
-    --text-main: #F4F1EA;
-    --text-muted: #D4AF37;
-    --nav-bg: rgba(5, 2, 2, 0.8);
-    --card-bg: rgba(20, 10, 10, 0.4);
+    --bg-color: #0a0e1a;
+    /* Deep blue-black for better contrast */
+    --text-main: #FFFFFF;
+    --text-muted: #FFC107;
+    --nav-bg: rgba(10, 14, 26, 0.95);
+    --card-bg: rgba(255, 255, 255, 0.08);
     --border-color: var(--color-gold);
+    --shadow-color: rgba(255, 184, 0, 0.2);
 
     /* Typography */
     --font-header: 'Philosopher', serif;
@@ -22,13 +24,13 @@
 }
 
 [data-theme="light"] {
-    --bg-color: #F9F5EB;
-    --text-main: #2c1810;
-    --text-muted: #8B0000;
-    --nav-bg: rgba(249, 245, 235, 0.95);
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --border-color: #8B0000;
-    --shadow-color: rgba(139, 0, 0, 0.1);
+    --bg-color: #FFF9F0;
+    --text-main: #2c2c2c;
+    --text-muted: #FF6B6B;
+    --nav-bg: rgba(255, 249, 240, 0.95);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #FFB800;
+    --shadow-color: rgba(255, 184, 0, 0.15);
 }
 
 * {
@@ -40,7 +42,7 @@
 body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
-    background-image: radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 80%);
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 184, 0, 0.1) 0%, transparent 80%);
     color: var(--text-main);
     line-height: 1.6;
     transition: all 0.5s ease;
@@ -59,7 +61,7 @@ body {
     z-index: 1000;
     background: var(--nav-bg);
     backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(255, 184, 0, 0.3);
 }
 
 .nav-logo {
@@ -196,8 +198,8 @@ input:checked+.slider:before {
     justify-content: center;
     position: relative;
     padding: 0 10%;
-    /* Darker, more atmospheric background */
-    background: linear-gradient(to bottom, rgba(5, 2, 2, 0.6), rgba(5, 2, 2, 0.9)), url('images/madura_landscape_hero.jpg');
+    /* Bright, welcoming background */
+    background: linear-gradient(to bottom, rgba(10, 14, 26, 0.7), rgba(10, 14, 26, 0.85)), url('images/madura_landscape_hero.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -228,23 +230,6 @@ input:checked+.slider:before {
     font-family: var(--font-header);
     font-size: 5rem;
     line-height: 1.1;
-    margin-bottom: 30px;
-    color: var(--text-main);
-    font-weight: 700;
-}
-
-.gradient-text {
-    background: linear-gradient(to right, #D4AF37, #FFF8E1, #D4AF37);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 5s linear infinite;
-}
-
-@keyframes shine {
-    to {
-        background-position: 200% center;
-    }
 }
 
 .hero-description-box {
@@ -305,7 +290,7 @@ input:checked+.slider:before {
     position: relative;
     padding: 120px 20px;
     overflow: hidden;
-    background: radial-gradient(circle at 20% 20%, rgba(139, 0, 0, 0.05), transparent 50%);
+    background: radial-gradient(circle at 20% 20%, rgba(255, 184, 0, 0.08), transparent 50%);
 }
 
 .canvas-container {
@@ -465,9 +450,9 @@ input:checked+.slider:before {
     text-align: center;
     margin-top: 80px;
     padding: 60px;
-    background: rgba(212, 175, 55, 0.05);
+    background: rgba(255, 184, 0, 0.08);
     border-radius: 20px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(255, 184, 0, 0.3);
 }
 
 .cta-text {
@@ -485,7 +470,7 @@ input:checked+.slider:before {
     align-items: center;
     justify-content: center;
     padding: 100px 20px;
-    background: #020101;
+    background: #0a0e1a;
     overflow: hidden;
 }
 
@@ -516,8 +501,8 @@ input:checked+.slider:before {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 1px solid rgba(212, 175, 55, 0.1);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(255, 184, 0, 0.15);
+    box-shadow: 0 0 20px rgba(255, 184, 0, 0.1);
 }
 
 .ring-1 {
@@ -537,7 +522,7 @@ input:checked+.slider:before {
 .ring-3 {
     width: 750px;
     height: 750px;
-    border-color: rgba(139, 0, 0, 0.2);
+    border-color: rgba(255, 107, 107, 0.15);
     animation: spin 40s linear infinite;
 }
 
@@ -671,8 +656,8 @@ input:checked+.slider:before {
 
 /* Enhanced Primary Button */
 .primary-btn {
-    background: linear-gradient(135deg, var(--color-gold), #FFD700);
-    color: var(--color-brown);
+    background: linear-gradient(135deg, #FFB800, #FFC107);
+    color: #1a1a1a;
     border: none;
     padding: 18px 40px;
     border-radius: 50px;
@@ -684,7 +669,7 @@ input:checked+.slider:before {
     gap: 15px;
     font-family: var(--font-header);
     font-size: 1.1rem;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 20px rgba(255, 184, 0, 0.4);
     position: relative;
     overflow: hidden;
 }
@@ -706,13 +691,13 @@ input:checked+.slider:before {
 
 .primary-btn:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
-    background: linear-gradient(135deg, #FFD700, var(--color-gold));
+    box-shadow: 0 0 40px rgba(255, 184, 0, 0.6);
+    background: linear-gradient(135deg, #FFC107, #FFD54F);
 }
 
 /* Loading Animation Enhancement */
 .primary-btn.loading {
-    background: linear-gradient(135deg, #8B0000, var(--color-red));
+    background: linear-gradient(135deg, #FF6B6B, #E74C3C);
     color: white;
 }
 
@@ -739,11 +724,11 @@ input:checked+.slider:before {
 
     0%,
     100% {
-        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        box-shadow: 0 0 20px rgba(255, 184, 0, 0.3);
     }
 
     50% {
-        box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+        box-shadow: 0 0 40px rgba(255, 184, 0, 0.6);
     }
 }
 
@@ -757,7 +742,7 @@ input:checked+.slider:before {
     font-size: 2.8rem;
     color: var(--text-main);
     letter-spacing: 3px;
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    text-shadow: 0 0 20px rgba(255, 184, 0, 0.3);
 }
 
 .subtitle {

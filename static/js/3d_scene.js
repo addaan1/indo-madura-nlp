@@ -1,4 +1,4 @@
-// Enhanced 3D Scene with Madura Cultural Elements
+// Simplified Modern 3D Scene
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('canvas-container');
     if (!container) return;
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scene Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 8;
+    camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -14,133 +14,93 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(renderer.domElement);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xD4AF37, 1);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
+    const pointLight = new THREE.PointLight(0xFFB800, 1.5);
+    pointLight.position.set(3, 3, 3);
+    scene.add(pointLight);
 
-    // Cultural Elements Group
-    const culturalElements = new THREE.Group();
-    scene.add(culturalElements);
+    // Main Group
+    const mainGroup = new THREE.Group();
+    scene.add(mainGroup);
 
-    // 1. Madura Island Map (Enhanced)
-    const islandGeometry = new THREE.BufferGeometry();
-    const islandCount = 2000;
-    const islandPosArray = new Float32Array(islandCount * 3);
+    // 1. Minimal Particle Field
+    const particleGeometry = new THREE.BufferGeometry();
+    const particleCount = 800;
+    const particlePosArray = new Float32Array(particleCount * 3);
+    const particleColorArray = new Float32Array(particleCount * 3);
 
-    for (let i = 0; i < islandCount * 3; i += 3) {
-        // Create elongated Madura-shaped particle cloud
-        const x = (Math.random() - 0.5) * 10;
-        const y = (Math.random() - 0.5) * 3 * Math.cos(x * 0.3);
-        const z = (Math.random() - 0.5) * 1;
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        // Create scattered particle field
+        particlePosArray[i] = (Math.random() - 0.5) * 12;
+        particlePosArray[i + 1] = (Math.random() - 0.5) * 12;
+        particlePosArray[i + 2] = (Math.random() - 0.5) * 12;
 
-        islandPosArray[i] = x;
-        islandPosArray[i + 1] = y;
-        islandPosArray[i + 2] = z;
+        // Color variation between gold and coral
+        const colorChoice = Math.random();
+        if (colorChoice > 0.5) {
+            particleColorArray[i] = 1.0;     // R
+            particleColorArray[i + 1] = 0.72; // G
+            particleColorArray[i + 2] = 0.0;  // B (Gold)
+        } else {
+            particleColorArray[i] = 1.0;     // R
+            particleColorArray[i + 1] = 0.42; // G
+            particleColorArray[i + 2] = 0.42; // B (Coral)
+        }
     }
 
-    islandGeometry.setAttribute('position', new THREE.BufferAttribute(islandPosArray, 3));
-    
-    const islandMaterial = new THREE.PointsMaterial({
-        size: 0.04,
-        color: 0xD4AF37,
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePosArray, 3));
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColorArray, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+        size: 0.03,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.7,
         blending: THREE.AdditiveBlending
     });
 
-    const maduraIsland = new THREE.Points(islandGeometry, islandMaterial);
-    culturalElements.add(maduraIsland);
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    mainGroup.add(particles);
 
-    // 2. Traditional Boat (Simplified)
-    function createTraditionalBoat() {
-        const boatGroup = new THREE.Group();
-        
-        // Boat hull (simplified as curved shape)
-        const hullGeometry = new THREE.CylinderGeometry(0.5, 0.8, 2, 8, 1, true);
-        const hullMaterial = new THREE.MeshPhongMaterial({ 
-            color: 0x8B4513,
-            shininess: 30
-        });
-        const hull = new THREE.Mesh(hullGeometry, hullMaterial);
-        hull.rotation.z = Math.PI / 2;
-        boatGroup.add(hull);
-
-        // Sail
-        const sailGeometry = new THREE.PlaneGeometry(1.5, 2);
-        const sailMaterial = new THREE.MeshPhongMaterial({ 
-            color: 0xFFFFFF,
+    // 2. Geometric Rings
+    function createRing(radius, color, thickness = 0.02) {
+        const geometry = new THREE.TorusGeometry(radius, thickness, 16, 100);
+        const material = new THREE.MeshPhongMaterial({
+            color: color,
             transparent: true,
-            opacity: 0.8,
-            side: THREE.DoubleSide
+            opacity: 0.4,
+            shininess: 100
         });
-        const sail = new THREE.Mesh(sailGeometry, sailMaterial);
-        sail.position.set(0, 1, 0);
-        sail.rotation.y = Math.PI / 4;
-        boatGroup.add(sail);
-
-        boatGroup.position.set(3, 2, 0);
-        boatGroup.scale.set(0.8, 0.8, 0.8);
-        
-        return boatGroup;
+        return new THREE.Mesh(geometry, material);
     }
 
-    const traditionalBoat = createTraditionalBoat();
-    culturalElements.add(traditionalBoat);
+    const ring1 = createRing(1.5, 0xFFB800, 0.015);
+    ring1.rotation.x = Math.PI / 3;
+    mainGroup.add(ring1);
 
-    // 3. Batik Pattern Particles
-    const batikGeometry = new THREE.BufferGeometry();
-    const batikCount = 500;
-    const batikPosArray = new Float32Array(batikCount * 3);
+    const ring2 = createRing(2.2, 0xFF6B6B, 0.012);
+    ring2.rotation.y = Math.PI / 4;
+    mainGroup.add(ring2);
 
-    for (let i = 0; i < batikCount * 3; i += 3) {
-        // Create circular batik-like pattern
-        const radius = 3 + Math.random() * 2;
-        const angle = Math.random() * Math.PI * 2;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
-        const z = (Math.random() - 0.5) * 2;
+    const ring3 = createRing(2.8, 0xFFC107, 0.01);
+    ring3.rotation.x = -Math.PI / 4;
+    ring3.rotation.y = Math.PI / 3;
+    mainGroup.add(ring3);
 
-        batikPosArray[i] = x;
-        batikPosArray[i + 1] = y;
-        batikPosArray[i + 2] = z;
-    }
-
-    batikGeometry.setAttribute('position', new THREE.BufferAttribute(batikPosArray, 3));
-    
-    const batikMaterial = new THREE.PointsMaterial({
-        size: 0.03,
-        color: 0x8B0000,
+    // 3. Central Accent Sphere
+    const sphereGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+    const sphereMaterial = new THREE.MeshPhongMaterial({
+        color: 0xFFB800,
         transparent: true,
         opacity: 0.6,
-        blending: THREE.AdditiveBlending
+        shininess: 100,
+        emissive: 0xFFB800,
+        emissiveIntensity: 0.3
     });
-
-    const batikPattern = new THREE.Points(batikGeometry, batikMaterial);
-    culturalElements.add(batikPattern);
-
-    // 4. Ambient Cultural Particles
-    const culturalParticlesGeometry = new THREE.BufferGeometry();
-    const culturalParticlesCount = 800;
-    const culturalParticlesPos = new Float32Array(culturalParticlesCount * 3);
-    
-    for (let i = 0; i < culturalParticlesCount * 3; i++) {
-        culturalParticlesPos[i] = (Math.random() - 0.5) * 15;
-    }
-    
-    culturalParticlesGeometry.setAttribute('position', new THREE.BufferAttribute(culturalParticlesPos, 3));
-    
-    const culturalParticlesMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        color: 0x006400,
-        transparent: true,
-        opacity: 0.4
-    });
-    
-    const culturalParticles = new THREE.Points(culturalParticlesGeometry, culturalParticlesMaterial);
-    scene.add(culturalParticles);
+    const centralSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    mainGroup.add(centralSphere);
 
     // Animation Variables
     let mouseX = 0;
@@ -154,25 +114,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const animate = () => {
         requestAnimationFrame(animate);
-        time += 0.01;
+        time += 0.005;
 
-        // Gentle rotation for cultural elements
-        culturalElements.rotation.y += 0.002;
+        // Gentle rotation for main group
+        mainGroup.rotation.y += 0.001;
 
-        // Interactive rotation based on mouse
-        culturalElements.rotation.x += (mouseY * 0.3 - culturalElements.rotation.x) * 0.05;
-        culturalElements.rotation.y += (mouseX * 0.3 - (culturalElements.rotation.y % (Math.PI * 2))) * 0.05;
+        // Interactive rotation based on mouse (subtle)
+        mainGroup.rotation.x += (mouseY * 0.2 - mainGroup.rotation.x) * 0.03;
+        mainGroup.rotation.y += (mouseX * 0.2 - (mainGroup.rotation.y % (Math.PI * 2))) * 0.03;
 
-        // Boat floating animation
-        traditionalBoat.position.y = 2 + Math.sin(time * 2) * 0.3;
-        traditionalBoat.rotation.z = Math.sin(time) * 0.1;
+        // Animate rings independently
+        ring1.rotation.z += 0.002;
+        ring2.rotation.z -= 0.0015;
+        ring3.rotation.z += 0.001;
 
-        // Batik pattern rotation
-        batikPattern.rotation.z += 0.001;
+        // Pulse effect for central sphere
+        const pulseScale = 1 + Math.sin(time * 2) * 0.1;
+        centralSphere.scale.setScalar(pulseScale);
 
-        // Pulse effect for Madura island
-        const pulseScale = 1 + Math.sin(time * 1.5) * 0.05;
-        maduraIsland.scale.setScalar(pulseScale);
+        // Gentle wave motion for particles
+        const positions = particles.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+            positions[i + 1] += Math.sin(time * 2 + positions[i]) * 0.001;
+        }
+        particles.geometry.attributes.position.needsUpdate = true;
 
         renderer.render(scene, camera);
     };

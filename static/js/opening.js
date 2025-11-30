@@ -31,14 +31,14 @@ function resizeCanvas() {
 
 function initParticles() {
     AnimationState.particles = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 40; i++) {
         AnimationState.particles.push({
             x: Math.random() * AnimationState.width,
             y: Math.random() * AnimationState.height,
-            size: Math.random() * 3 + 1,
-            speedX: (Math.random() - 0.5) * 0.5,
-            speedY: (Math.random() - 0.5) * 0.5,
-            opacity: Math.random() * 0.5 + 0.2
+            size: Math.random() * 2.5 + 0.8,
+            speedX: (Math.random() - 0.5) * 0.4,
+            speedY: (Math.random() - 0.5) * 0.4,
+            opacity: Math.random() * 0.6 + 0.3
         });
     }
 }
@@ -77,33 +77,25 @@ function animate() {
 }
 
 function drawBackground(ctx, elapsed) {
+    // Modern gradient background
     const gradient = ctx.createLinearGradient(0, 0, AnimationState.width, AnimationState.height);
-    gradient.addColorStop(0, '#0f172a');
-    gradient.addColorStop(0.5, '#1e293b');
-    gradient.addColorStop(1, '#334155');
+    gradient.addColorStop(0, '#0a0e1a');
+    gradient.addColorStop(0.5, '#1a1f3a');
+    gradient.addColorStop(1, '#2a2f4a');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, AnimationState.width, AnimationState.height);
 
-    // Batik pattern
+    // Subtle geometric pattern
     ctx.save();
-    ctx.globalAlpha = 0.06;
-    const size = 60;
+    ctx.globalAlpha = 0.04;
+    const size = 80;
     for (let y = 0; y < AnimationState.height + size; y += size) {
         for (let x = 0; x < AnimationState.width + size; x += size) {
-            ctx.strokeStyle = '#FFD700';
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#FFB800';
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
-            ctx.moveTo(x + size / 2, y);
-            ctx.lineTo(x + size, y + size / 2);
-            ctx.lineTo(x + size / 2, y + size);
-            ctx.lineTo(x, y + size / 2);
-            ctx.closePath();
+            ctx.arc(x + size / 2, y + size / 2, size / 3, 0, Math.PI * 2);
             ctx.stroke();
-
-            ctx.fillStyle = '#DC143C';
-            ctx.beginPath();
-            ctx.arc(x + size / 2, y + size / 2, 2, 0, Math.PI * 2);
-            ctx.fill();
         }
     }
     ctx.restore();
@@ -120,9 +112,9 @@ function drawParticles(ctx, elapsed) {
         if (p.y > AnimationState.height) p.y = 0;
 
         const pulse = Math.sin(elapsed * 2 + p.x) * 0.3 + 0.7;
-        ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity * pulse})`;
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.5)';
-        ctx.shadowBlur = 10;
+        ctx.fillStyle = `rgba(255, 184, 0, ${p.opacity * pulse})`;
+        ctx.shadowColor = 'rgba(255, 184, 0, 0.6)';
+        ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
@@ -134,85 +126,58 @@ function drawCulturalElements(ctx, elapsed) {
     const centerX = AnimationState.width / 2;
     const centerY = AnimationState.height / 2;
 
-    // Madura island silhouette
+    // Simplified glowing accent
     ctx.save();
-    ctx.translate(centerX - 200, centerY + 150);
-    ctx.shadowColor = 'rgba(255, 215, 0, 0.3)';
-    ctx.shadowBlur = 20;
-    ctx.fillStyle = 'rgba(255, 215, 0, 0.12)';
+    ctx.translate(centerX, centerY + 180);
+    ctx.shadowColor = 'rgba(255, 184, 0, 0.4)';
+    ctx.shadowBlur = 30;
+    ctx.fillStyle = 'rgba(255, 184, 0, 0.15)';
     ctx.beginPath();
-    ctx.ellipse(0, 0, 120, 30, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, 0, 100, 25, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
-    // Traditional icons
-    drawBoat(ctx, centerX - 300 + Math.sin(elapsed) * 10, centerY - 200 + Math.cos(elapsed * 0.5) * 15, elapsed);
-    drawHouse(ctx, centerX + 300 + Math.sin(elapsed * 0.8) * 10, centerY - 180 + Math.cos(elapsed * 0.6) * 12, elapsed);
-    drawBatikMotif(ctx, centerX + 280 + Math.cos(elapsed * 0.7) * 15, centerY + 180 + Math.sin(elapsed * 0.9) * 10, elapsed);
+    // Minimal floating icons
+    drawMinimalIcon(ctx, centerX - 250 + Math.sin(elapsed) * 8, centerY - 150 + Math.cos(elapsed * 0.5) * 12, elapsed, 0);
+    drawMinimalIcon(ctx, centerX + 250 + Math.sin(elapsed * 0.8) * 8, centerY - 140 + Math.cos(elapsed * 0.6) * 10, elapsed, 1);
+    drawMinimalIcon(ctx, centerX + Math.cos(elapsed * 0.7) * 280, centerY + 160 + Math.sin(elapsed * 0.9) * 8, elapsed, 2);
 }
 
-function drawBoat(ctx, x, y, elapsed) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.globalAlpha = 0.3;
-
-    ctx.fillStyle = '#8B4513';
-    ctx.beginPath();
-    ctx.moveTo(-20, 0);
-    ctx.lineTo(20, 0);
-    ctx.lineTo(15, 10);
-    ctx.lineTo(-15, 10);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.fillStyle = '#FFD700';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, -30);
-    ctx.lineTo(15, -15);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-}
-
-function drawHouse(ctx, x, y, elapsed) {
+function drawMinimalIcon(ctx, x, y, elapsed, type) {
     ctx.save();
     ctx.translate(x, y);
     ctx.globalAlpha = 0.25;
 
-    ctx.fillStyle = '#DC143C';
-    ctx.beginPath();
-    ctx.moveTo(0, -20);
-    ctx.lineTo(-25, 0);
-    ctx.lineTo(25, 0);
-    ctx.closePath();
-    ctx.fill();
+    if (type === 0) {
+        // Circle
+        ctx.strokeStyle = '#FFB800';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, 15, 0, Math.PI * 2);
+        ctx.stroke();
+    } else if (type === 1) {
+        // Triangle
+        ctx.fillStyle = '#FF6B6B';
+        ctx.beginPath();
+        ctx.moveTo(0, -15);
+        ctx.lineTo(-15, 15);
+        ctx.lineTo(15, 15);
+        ctx.closePath();
+        ctx.fill();
+    } else {
+        // Diamond
+        ctx.strokeStyle = '#FFB800';
+        ctx.lineWidth = 2;
+        ctx.rotate(elapsed * 0.2);
+        ctx.beginPath();
+        ctx.moveTo(0, -18);
+        ctx.lineTo(18, 0);
+        ctx.lineTo(0, 18);
+        ctx.lineTo(-18, 0);
+        ctx.closePath();
+        ctx.stroke();
+    }
 
-    ctx.fillStyle = '#8B4513';
-    ctx.fillRect(-20, 0, 40, 25);
-    ctx.restore();
-}
-
-function drawBatikMotif(ctx, x, y, elapsed) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(elapsed * 0.3);
-    ctx.globalAlpha = 0.35;
-
-    ctx.strokeStyle = '#FFD700';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, -25);
-    ctx.lineTo(25, 0);
-    ctx.lineTo(0, 25);
-    ctx.lineTo(-25, 0);
-    ctx.closePath();
-    ctx.stroke();
-
-    ctx.fillStyle = '#DC143C';
-    ctx.beginPath();
-    ctx.arc(0, 0, 5, 0, Math.PI * 2);
-    ctx.fill();
     ctx.restore();
 }
 

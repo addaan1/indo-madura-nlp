@@ -62,9 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             el.textContent = chars[Math.floor(Math.random() * chars.length)];
 
             // Random Position within the orbit container
-            // We want them somewhat centered but spread out
             const angle = Math.random() * Math.PI * 2;
-            const radius = 150 + Math.random() * 250; // Between ring 1 and ring 3
+            const radius = 150 + Math.random() * 250;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
 
@@ -86,4 +85,3 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(createCipherChar, 100);
     }
 });
-
