@@ -232,6 +232,12 @@ input:checked+.slider:before {
     line-height: 1.1;
 }
 
+.hero-title,
+.hero-title .gradient-text {
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+}
+
 .hero-description-box {
     position: relative;
     max-width: 700px;
@@ -398,6 +404,10 @@ input:checked+.slider:before {
     font-size: 1.1rem;
     color: #ccc;
     line-height: 1.8;
+}
+
+[data-theme="light"] .about-text p {
+    color: #1a1a1a;
 }
 
 .about-visual {
@@ -591,7 +601,6 @@ input:checked+.slider:before {
 }
 
 .translator-card:hover {
-    animation: float-translator 3s ease-in-out infinite;
     box-shadow: 0 0 150px var(--shadow-color),
         0 20px 40px rgba(0, 0, 0, 0.1),
         inset 0 0 30px rgba(212, 175, 55, 0.1);
@@ -743,6 +752,10 @@ input:checked+.slider:before {
     color: var(--text-main);
     letter-spacing: 3px;
     text-shadow: 0 0 20px rgba(255, 184, 0, 0.3);
+}
+
+.app-section .app-header h2 {
+    color: #ffffff;
 }
 
 .subtitle {
@@ -914,6 +927,10 @@ textarea::placeholder {
     margin-bottom: 8px;
     color: var(--text-main);
     position: relative;
+}
+
+[data-theme="light"] .about-text li {
+    color: #1a1a1a;
 }
 
 .about-text li::before {

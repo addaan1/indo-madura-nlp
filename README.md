@@ -51,8 +51,8 @@ Follow these steps to run the project locally.
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/warisan-nusantara.git
-    cd warisan-nusantara
+    git clone https://github.com/addaan1/indo-madura-nlp
+    cd indo-madura-nlp
     ```
 
 2.  **Create a Virtual Environment (Optional but recommended)**
@@ -95,7 +95,12 @@ NLP-Final-Project/
 
 ## 👥 Authors
 
-*   **[Your Name]** - *Initial Work & NLP Model Development*
+*   **[Ghaly Anargya Azzam Rifqi Nahindra]** - *Model Development*
+*   **[Sahrul Adicandra Effendy]** - *Backend Development & Frontend Development*
+*   **[Adinda Syarifatul Muna]** - *Team Management*
+*   **[Fatma Hidayatul Khusna]** - *Project Coordination*
+*   **[Pradipta Deska Pryanda]** - *Idea & Inspiration*
+
 
 ## 📄 License
 
