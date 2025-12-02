@@ -49,7 +49,7 @@ class Translator:
             inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=128)
             
             # Generate translation
-            outputs = model.generate(**inputs, max_length=128, num_beams=4, early_stopping=True)
+            outputs = model.generate(**inputs, max_length=128, num_beams=4, early_stopping=True, repetition_penalty=1.2, no_repeat_ngram_size=3)
             
             # Decode
             translated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
