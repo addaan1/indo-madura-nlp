@@ -13,7 +13,7 @@ Beyond translation, the application serves as a digital cultural showcase, featu
 - **Cultural Insights**: Information about Madura's history, traditions (Karapan Sapi, Batik), and language structure.
 - **Speech Integration**: Speech-to-Text (STT) capabilities to make the tool more accessible.
 
-This project was developed as a Final Project for the **Natural Language Processing (NLP)** course (Week 14).
+This project was developed as a Final Project for the **Natural Language Processing (NLP)**.
 
 ## ✨ Key Features
 
@@ -108,3 +108,28 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 *Created with ❤️ for Indonesian Culture*
+
+## 📝 Catatan Pengumpulan Final Project
+
+**1. Identitas Kelompok**
+*   **Nomor Kelompok**: Kelompok I
+*   **Asal**: Teknologi Sains Data, Universitas Airlangga
+*   **Judul Project**: Warisan Nusantara: Madura Language Translator
+*   **Anggota**:
+    1. Ghaly Anargya Azzam Rifqi Nahindra
+    2. Sahrul Adicandra Effendy
+    3. Adinda Syarifatul Muna
+    4. Fatma Hidayatul Khusna
+    5. Pradipta Deska Pryanda
+
+**2. List Library**
+*   **Flask**: Web server.
+*   **Transformers**: Model NMT.
+*   **PyTorch**: Deep learning framework.
+*   **OpenAI Whisper**: Speech-to-Text.
+*   **FFmpeg**: Audio processing.
+
+**3. Tata Cara Penggunaan**
+1.  Install library: `pip install -r requirements.txt`
+2.  Jalankan app: `python app.py`
+3.  Buka `http://127.0.0.1:5000` di browser.
