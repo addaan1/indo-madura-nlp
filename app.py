@@ -13,6 +13,10 @@ def opening():
 def index():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 
 
 @app.route('/translate', methods=['POST'])
@@ -21,9 +25,9 @@ def translate():
     text = data.get('text', '')
     direction = data.get('direction', 'id_to_mad')
     
-    translated_text = translator.translate(text, direction)
+    result = translator.translate(text, direction)
     
-    return jsonify({'translated_text': translated_text})
+    return jsonify({'translated_text': result['text'], 'score': result['score']})
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():

@@ -1,168 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Landing Section -->
-<section id="landing" class="landing-section">
-    <div class="landing-content">
-        <div class="badge">:: WARISAN NUSANTARA</div>
-        <h1 class="hero-title">
-            EKSPLORASI BUDAYA <br>
-            <span class="gradient-text">MADURA</span>
-        </h1>
-
-        <div class="hero-description-box">
-            <div class="line-decoration"></div>
-            <p class="hero-description">
-                "Menyelami Kekayaan Bahasa dan Tradisi Pulau Garam"
-                <br><br>
-                Sebuah inisiatif digital untuk melestarikan dan memperkenalkan keindahan budaya Madura kepada dunia.
-            </p>
-        </div>
-
-        <button class="launch-btn"
-            onclick="document.getElementById('about-section').scrollIntoView({behavior: 'smooth'})">
-            :: JELAJAHI LEBIH DALAM
-        </button>
-    </div>
-</section>
-
-<!-- About Section (Extended & Enhanced) -->
-<section id="about-section" class="about-section">
-    <div class="container">
-        <!-- 3D Madura Cultural Elements -->
-        <div id="canvas-container" class="canvas-container"></div>
-
-        <div class="about-content-wrapper">
-            <header class="section-header">
-                <h2>TENTANG MADURA & APLIKASI INI</h2>
-                <div class="header-line"></div>
-                <p class="section-subtitle">Menyelami Warisan Budaya yang Kaya dan Makna di Balik Pengembangan</p>
-            </header>
-
-            <div class="about-grid">
-                <!-- Row 1: Extended History -->
-                <div class="about-row">
-                    <div class="about-text">
-                        <h3><i class="fa-solid fa-landmark"></i> Sejarah & Asal Usul Madura</h3>
-                        <p>
-                            Madura, pulau yang terletak di sebelah timur laut Jawa Timur, memiliki sejarah panjang
-                            yang tercatat sejak era kerajaan-kerajaan Nusantara. Sebagai bagian dari wilayah
-                            Kerajaan Majapahit, Madura berkembang menjadi pusat perdagangan dan budaya yang penting.
-                        </p>
-                        <p>
-                            Dikenal sebagai "Pulau Garam", Madura memiliki tradisi maritim yang kuat dengan
-                            perahu-perahu tradisional seperti "Perahu Cadik" yang menjadi simbol perjalanan
-                            dan perdagangan. Masyarakat Madura juga terkenal dengan etos kerja keras dan semangat
-                            merantau yang telah membawa mereka ke berbagai penjuru Nusantara.
-                        </p>
-                    </div>
-                    <div class="about-visual">
-                        <div class="visual-circle cultural-icon">
-                            <i class="fa-solid fa-ship"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Row 2: Language Importance -->
-                <div class="about-row">
-                    <div class="about-text">
-                        <h3><i class="fa-solid fa-language"></i> Mengapa Bahasa Madura Perlu Dilestarikan?</h3>
-                        <p>
-                            Bahasa Madura adalah salah satu bahasa daerah terbesar di Indonesia dengan lebih dari
-                            10 juta penutur. Bahasa ini memiliki sistem tingkatan (ondhaggha basa) yang kompleks
-                            yang mencerminkan nilai-nilai kesopanan dan tata krama masyarakat Madura.
-                        </p>
-                        <p>
-                            Dalam era digital, bahasa daerah menghadapi tantangan pelestarian. Banyak generasi muda
-                            yang semakin jarang menggunakan bahasa Madura dalam kehidupan sehari-hari. Pelestarian
-                            bahasa ini penting untuk menjaga identitas budaya dan kearifan lokal yang terkandung
-                            dalam kosakata dan ungkapan tradisional.
-                        </p>
-                    </div>
-                    <div class="about-visual">
-                        <div class="visual-circle cultural-icon">
-                            <i class="fa-solid fa-comments"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Row 3: Cultural Works -->
-                <div class="about-row">
-                    <div class="about-text">
-                        <h3><i class="fa-solid fa-masks-theater"></i> Karya Budaya Madura</h3>
-                        <p>
-                            <strong>Karapan Sapi:</strong> Event balap sapi yang menjadi ikon budaya Madura,
-                            menggambarkan semangat kompetisi dan kerja sama.
-                        </p>
-                        <p>
-                            <strong>Batik Madura:</strong> Dikenal dengan warna-warna cerah dan motif berani
-                            yang terinspirasi dari alam dan kehidupan sehari-hari.
-                        </p>
-                        <p>
-                            <strong>Musik Saronen:</strong> Alat musik tradisional yang menjadi pengiring
-                            dalam berbagai upacara adat dan festival.
-                        </p>
-                        <p>
-                            <strong>Kerajinan Perak:</strong> Kota Bangkalan terkenal dengan kerajinan perak
-                            yang memiliki nilai seni tinggi.
-                        </p>
-                    </div>
-                    <div class="about-visual">
-                        <div class="visual-circle cultural-icon">
-                            <i class="fa-solid fa-palette"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Row 4: Development Motivation -->
-                <div class="about-row">
-                    <div class="about-text">
-                        <h3><i class="fa-solid fa-lightbulb"></i> Motivasi Pengembangan Aplikasi</h3>
-                        <p>
-                            Aplikasi penerjemah bahasa Madura ini dikembangkan sebagai respons terhadap
-                            semakin menipisnya penggunaan bahasa Madura di kalangan generasi muda. Dengan
-                            memanfaatkan teknologi <em>Neural Machine Translation</em>, kami bertujuan:
-                        </p>
-                        <ul>
-                            <li>Memudahkan penerjemahan bahasa Madura dan bahasa Indonesia bagi generasi muda</li>
-                            <li>Mempromosikan budaya Madura kepada khalayak yang lebih luas</li>
-                            <li>Mendukung pendidikan multilingual di Indonesia</li>
-                        </ul>
-                        <p>
-                            Aplikasi ini merupakan bagian dari komitmen kami untuk menjaga warisan
-                            budaya Nusantara di era digital.
-                        </p>
-                    </div>
-                    <div class="about-visual">
-                        <div class="visual-circle cultural-icon">
-                            <i class="fa-solid fa-brain"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="action-area">
-                <p class="cta-text">Siap menjelajahi dan mencoba fitur penerjemahan?</p>
-                <button class="launch-btn secondary"
-                    onclick="document.getElementById('app-section').scrollIntoView({behavior: 'smooth'})">
-                    :: COBA MODEL TRANSLASI SEKARANG
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- App Section (Model Translasi) -->
 <section id="app-section" class="app-section">
-    <!-- Animation Background Container -->
+    <!-- Clean background without 3D elements -->
     <div class="animation-bg">
-        <div class="orbit-container">
-            <div class="orbit-ring ring-1"></div>
-            <div class="orbit-ring ring-2"></div>
-            <div class="orbit-ring ring-3"></div>
-            <!-- Floating Cipher Text will be added by JS -->
-            <div id="cipher-container"></div>
-        </div>
+        <!-- Floating Cipher Text will be added by JS, but kept minimal -->
+        <div id="cipher-container"></div>
     </div>
 
     <div class="container relative-z">
@@ -171,7 +15,7 @@
                 <i class="fa-solid fa-language logo-icon"></i>
                 <h2>MODEL TRANSLASI</h2>
             </div>
-            <p class="subtitle">Didukung oleh Neural Machine Translation</p>
+            <p class="subtitle">Didukung oleh Cendol-mT5 ID–MAD</p>
         </header>
 
         <div class="glass-card translator-card">
@@ -188,17 +32,19 @@
 
             <div class="translation-grid">
                 <!-- Input Section -->
-                <div class="text-area-wrapper input-wrapper">
-                    <div class="area-header">
-                        <span class="label">:: MASUKKAN DATA</span>
-                        <button id="micBtn" class="icon-btn" title="Rekam Suara">
-                            <i class="fa-solid fa-microphone"></i>
-                        </button>
+                <div class="input-section">
+                    <div class="text-area-wrapper input-wrapper">
+                        <div class="area-header">
+                            <span class="label">:: MASUKKAN TEKS</span>
+                            <button id="micBtn" class="icon-btn" title="Rekam Suara">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+                        </div>
+                        <textarea id="inputText" placeholder="Masukkan teks atau merekam suara..."></textarea>
+                        <div class="char-count">0 chars</div>
+                        <div class="corner-decoration top-left"></div>
+                        <div class="corner-decoration bottom-right"></div>
                     </div>
-                    <textarea id="inputText" placeholder="Masukkan teks atau merekam suara..."></textarea>
-                    <div class="char-count">0 chars</div>
-                    <div class="corner-decoration top-left"></div>
-                    <div class="corner-decoration bottom-right"></div>
                 </div>
 
                 <!-- Action Section -->
@@ -218,22 +64,69 @@
                         </button>
                     </div>
                     <textarea id="outputText" readonly placeholder="Hasil terjemahan..."></textarea>
+
+                    <!-- Confidence Score Display -->
+                    <div id="scoreDisplay" class="score-display hidden">
+                        <span class="score-label">Confidence Score:</span>
+                        <span id="scoreValue" class="score-value">0%</span>
+                    </div>
+
                     <div class="corner-decoration top-right"></div>
                     <div class="corner-decoration bottom-left"></div>
                 </div>
             </div>
+
+            <!-- Word Recommendations (Full Width) -->
+            <div class="recommendation-area">
+                <span class="rec-label">Rekomendasi Kata:</span>
+                <div class="chips-container">
+                    <button class="chip" onclick="addText('Saya')">Saya</button>
+                    <button class="chip" onclick="addText('Makan')">Makan</button>
+                    <button class="chip" onclick="addText('Pergi')">Pergi</button>
+                    <button class="chip" onclick="addText('Pulang')">Pulang</button>
+                    <button class="chip" onclick="addText('Tidur')">Tidur</button>
+                    <button class="chip" onclick="addText('Rumah')">Rumah</button>
+                    <button class="chip" onclick="addText('Pasar')">Pasar</button>
+                    <button class="chip" onclick="addText('Sekolah')">Sekolah</button>
+                    <button class="chip" onclick="addText('Sakit')">Sakit</button>
+                    <button class="chip" onclick="addText('Bapak')">Bapak</button>
+                    <button class="chip" onclick="addText('Ibu')">Ibu</button>
+                    <button class="chip" onclick="addText('Kakak')">Kakak</button>
+                    <button class="chip" onclick="addText('Adik')">Adik</button>
+                    <button class="chip" onclick="addText('Sapi')">Sapi</button>
+                    <button class="chip" onclick="addText('Air')">Air</button>
+                    <button class="chip" onclick="addText('Nasi')">Nasi</button>
+                    <button class="chip" onclick="addText('Uang')">Uang</button>
+                    <button class="chip" onclick="addText('Guru')">Guru</button>
+                    <button class="chip" onclick="addText('Madura')">Madura</button>
+                    <button class="chip" onclick="addText('Terima Kasih')">Terima Kasih</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/3d_scene.js') }}"></script>
 <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+<script src="{{ url_for('static', filename='js/background_animation.js') }}"></script>
 <script>
     // --- UI Interactions ---
     const inputText = document.getElementById('inputText');
     const charCount = document.querySelector('.char-count');
+
+    // Function for Word Chips
+    function addText(text) {
+        if (inputText) {
+            // Append with space if needed
+            if (inputText.value && !inputText.value.endsWith(' ')) {
+                inputText.value += ' ';
+            }
+            inputText.value += text;
+            inputText.dispatchEvent(new Event('input')); // Trigger char count update
+        }
+    }
 
     if (inputText) {
         inputText.addEventListener('input', () => {
@@ -259,8 +152,9 @@
             const text = document.getElementById('inputText').value;
             const direction = document.getElementById('direction').value;
             const outputText = document.getElementById('outputText');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreValue = document.getElementById('scoreValue');
             const btn = document.getElementById('translateBtn');
-            const btnIcon = btn.querySelector('i');
 
             if (!text.trim()) return;
 
@@ -268,6 +162,7 @@
             btn.disabled = true;
             btn.classList.add('loading');
             outputText.classList.add('pulse');
+            scoreDisplay.classList.add('hidden'); // Hide score during loading
             const originalText = btn.querySelector('span').textContent;
             btn.querySelector('span').textContent = "PROCESSING...";
 
@@ -280,6 +175,17 @@
 
                 const data = await response.json();
                 outputText.value = data.translated_text;
+
+                // Display Score
+                if (data.score !== undefined) {
+                    scoreValue.textContent = `${data.score}%`;
+                    scoreDisplay.classList.remove('hidden');
+
+                    // Color code based on score
+                    if (data.score > 80) scoreValue.style.color = '#4CAF50';
+                    else if (data.score > 50) scoreValue.style.color = '#FFC107';
+                    else scoreValue.style.color = '#FF5252';
+                }
             } catch (error) {
                 console.error('Error:', error);
                 outputText.value = 'Error occurred during translation.';
@@ -338,7 +244,10 @@
         formData.append('audio', audioBlob, 'recording.webm');
 
         const inputText = document.getElementById('inputText');
-        inputText.value = "Transcribing audio...";
+        const originalPlaceholder = inputText.placeholder;
+
+        inputText.value = "";
+        inputText.placeholder = "Mengirim audio & memproses (Whisper AI)...";
         inputText.disabled = true;
 
         try {
@@ -348,18 +257,33 @@
             });
 
             const data = await response.json();
+
             if (data.transcribed_text) {
-                inputText.value = data.transcribed_text;
-                inputText.dispatchEvent(new Event('input'));
+                if (data.transcribed_text.startsWith("Error:")) {
+                    // Show server error in the text box
+                    inputText.value = "";
+                    inputText.placeholder = data.transcribed_text;
+                    alert(data.transcribed_text); // Also alert for visibility
+                } else {
+                    inputText.value = data.transcribed_text;
+                    // Trigger input event to resize/validate if needed
+                    inputText.dispatchEvent(new Event('input'));
+                }
             } else {
-                inputText.value = "Transcription failed.";
+                inputText.placeholder = "Gagal memproses suara.";
             }
         } catch (error) {
             console.error('Error uploading audio:', error);
-            inputText.value = "Error uploading audio.";
+            inputText.value = "";
+            inputText.placeholder = "Error: Gagal terhubung ke server.";
         } finally {
             inputText.disabled = false;
-            inputText.placeholder = "Masukkan teks atau merekam suara...";
+            // Restore original placeholder after a delay if empty, or keep text
+            if (!inputText.value) {
+                setTimeout(() => {
+                    inputText.placeholder = originalPlaceholder;
+                }, 3000);
+            }
         }
     }
 </script>

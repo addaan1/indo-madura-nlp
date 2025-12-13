@@ -97,7 +97,7 @@ NLP-Final-Project/
 
 *   **[Ghaly Anargya Azzam Rifqi Nahindra]** - *Model Development*
 *   **[Sahrul Adicandra Effendy]** - *Backend Development & Frontend Development*
-*   **[Adinda Syarifatul Muna]** - *Team Management*
+*   **[Adinda Syarifatul Muna]** - *Team Management & Model Development*
 *   **[Fatma Hidayatul Khusna]** - *Project Coordination*
 *   **[Pradipta Deska Pryanda]** - *Idea & Inspiration*
 
