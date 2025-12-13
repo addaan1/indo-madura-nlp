@@ -4,31 +4,69 @@ import math
 
 class Translator:
     def __init__(self):
-        self.model_name = "addinda/cendol-mt5-id-mad-15ep"
+        # Define available models
+        self.AVAILABLE_MODELS = {
+            "base": "addinda/cendol-mt5-id-mad-15ep",
+            "mix": "addinda/cendol-mt5-id-mad-inmad-mix"
+        }
+        self.current_model_key = None
+        self.model = None
+        self.tokenizer = None
+        
+        # Load default model initially
+        self.load_model("base")
+
+    def load_model(self, model_key):
+        """Loads the specified model if not already loaded."""
+        if model_key == self.current_model_key and self.model is not None:
+            return True, "Model already loaded"
+            
+        if model_key not in self.AVAILABLE_MODELS:
+            return False, f"Model key '{model_key}' not found"
+
+        model_name = self.AVAILABLE_MODELS[model_key]
+        print(f"Switching to model: {model_name}...")
+        
+        # Unload previous model to free memory (simple garbage collection attempt)
+        if self.model is not None:
+            del self.model
+            del self.tokenizer
+            torch.cuda.empty_cache() if torch.cuda.is_available() else None
+            
         try:
-            print(f"Loading HuggingFace model: {self.model_name}...")
-            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-            self.model = AutoModelForSeq2SeqLM.from_pretrained(self.model_name)
-            print("Model loaded successfully.")
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+            self.current_model_key = model_key
+            print(f"Model '{model_key}' loaded successfully.")
+            return True, "Success"
         except Exception as e:
-            print(f"Error loading model: {e}")
+            print(f"Error loading model {model_name}: {e}")
             self.model = None
             self.tokenizer = None
+            self.current_model_key = None
+            return False, str(e)
 
-    def translate(self, text, direction):
+    def translate(self, text, direction, model_key="base"):
         """
-        Translates text using the loaded model.
+        Translates text using the specified model.
         Args:
             text (str): Text to translate.
             direction (str): 'id_to_mad' or 'mad_to_id'.
+            model_key (str): Key of the model to use ('base' or 'mix').
         Returns:
             dict: {'text': translated_text, 'score': confidence_score}
         """
         if not text:
             return {'text': "", 'score': 0.0}
+
+        # Ensure correct model is loaded
+        if self.current_model_key != model_key:
+            success, msg = self.load_model(model_key)
+            if not success:
+                return {'text': f"Error loading model: {msg}", 'score': 0.0}
             
         if not self.model or not self.tokenizer:
-            return {'text': "Model belum dimuat.", 'score': 0.0}
+            return {'text': "Model failed to load.", 'score': 0.0}
 
         try:
             # Set prefix based on direction
@@ -54,37 +92,25 @@ class Translator:
             translated_text = self.tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
             
             # Calculate confidence score
-            # Since we use beam search, we get multiple sequences
-            # We'll use the first (best) sequence for scoring
             transition_scores = self.model.compute_transition_scores(
                 outputs.sequences, outputs.scores, beam_indices=outputs.beam_indices, normalize_logits=True
             )
             
             # Get scores for the first (best) beam only
-            # transition_scores shape: (batch_size, sequence_length)
-            # Since batch_size=1 and we have beams, we take the first beam
             if transition_scores.dim() > 1:
-                first_beam_scores = transition_scores[0]  # Get first beam
+                first_beam_scores = transition_scores[0]
             else:
                 first_beam_scores = transition_scores
             
             # Calculate mean log probability
-            # Sum the log probabilities and divide by number of tokens
             total_log_prob = torch.sum(first_beam_scores)
             num_tokens = first_beam_scores.shape[0]
             
             if num_tokens > 0:
                 mean_log_prob = total_log_prob / num_tokens
-                # Convert to confidence (exp of mean log prob)
-                # This gives us a value between 0 and 1
                 confidence = math.exp(mean_log_prob.item())
-                
                 # Boost confidence score for UI visualization
-                # Raw probability is often low for sequences (e.g. 0.2-0.4 is actually good)
-                # We apply a square root transformation to boost it: 0.25 -> 0.5, 0.49 -> 0.7
                 boosted_confidence = math.sqrt(confidence)
-                
-                # Clip to reasonable range and convert to percentage
                 boosted_confidence = min(boosted_confidence, 1.0)
                 score = round(boosted_confidence * 100, 2)
             else:

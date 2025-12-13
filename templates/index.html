@@ -3,6 +3,9 @@
 {% block content %}
 <!-- App Section (Model Translasi) -->
 <section id="app-section" class="app-section">
+    <!-- Background Texture -->
+    <div class="bg-texture"></div>
+
     <!-- Clean background without 3D elements -->
     <div class="animation-bg">
         <!-- Floating Cipher Text will be added by JS, but kept minimal -->
@@ -21,12 +24,20 @@
         <div class="glass-card translator-card">
             <!-- Controls -->
             <div class="controls">
-                <div class="select-wrapper">
+                <div class="select-wrapper" id="direction-wrapper">
                     <select id="direction">
                         <option value="id_to_mad">INDONESIA &rarr; MADURA</option>
                         <option value="mad_to_id">MADURA &rarr; INDONESIA</option>
                     </select>
                     <i class="fa-solid fa-chevron-down select-icon"></i>
+                </div>
+
+                <div class="select-wrapper" id="model-wrapper">
+                    <select id="modelSelect">
+                        <option value="base">Cendol-mT5 Base (15ep)</option>
+                        <option value="mix">Cendol-mT5 Mix (In-Mad)</option>
+                    </select>
+                    <i class="fa-solid fa-microchip select-icon"></i>
                 </div>
             </div>
 
@@ -151,6 +162,7 @@
         translateBtn.addEventListener('click', async () => {
             const text = document.getElementById('inputText').value;
             const direction = document.getElementById('direction').value;
+            const model = document.getElementById('modelSelect').value;
             const outputText = document.getElementById('outputText');
             const scoreDisplay = document.getElementById('scoreDisplay');
             const scoreValue = document.getElementById('scoreValue');
@@ -170,7 +182,7 @@
                 const response = await fetch('/translate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text, direction }),
+                    body: JSON.stringify({ text, direction, model }),
                 });
 
                 const data = await response.json();

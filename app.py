@@ -24,8 +24,9 @@ def translate():
     data = request.get_json()
     text = data.get('text', '')
     direction = data.get('direction', 'id_to_mad')
+    model_key = data.get('model', 'base')
     
-    result = translator.translate(text, direction)
+    result = translator.translate(text, direction, model_key)
     
     return jsonify({'translated_text': result['text'], 'score': result['score']})
 
