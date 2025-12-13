@@ -99,6 +99,7 @@ NLP-Final-Project/
 └── templates/          # HTML templates
     ├── base.html       # Base layout
     └── index.html      # Main landing page
+```
 
 ## 👥 Authors
 
