@@ -1,69 +1,69 @@
-# 🏝️ Warisan Nusantara: Madura Language Translator
+# 🏝️ Warisan Nusantara: Penerjemah Bahasa Madura
 
 > **Eksplorasi Budaya Madura melalui Teknologi Neural Machine Translation**
 
 ![Project Banner](static/images/madura_landscape_hero.jpg)
 
-## 📖 About The Project
+## 📖 Tentang Proyek Ini
 
-**Warisan Nusantara** is a web-based application designed to preserve and promote the Madurese language and culture. At its core, it features a **Neural Machine Translation (NMT)** model capable of accurate bidirectional translation between **Indonesian** and **Madura** language.
+**Warisan Nusantara** adalah aplikasi berbasis web yang dirancang untuk melestarikan dan mempromosikan bahasa serta budaya Madura. Inti dari aplikasi ini menampilkan model **Neural Machine Translation (NMT)** yang mampu menerjemahkan secara akurat dua arah antara **Bahasa Indonesia** dan **Bahasa Madura**.
 
-This project goes beyond simple translation by serving as a digital cultural showcase. It integrates modern web technologies with traditional aesthetics, featuring:
-- **Interactive 3D Visuals**: A particle-based 3D scene powered by Three.js.
-- **Cultural Identity**: A design philosophy rooted in Madurese heritage (Batik and Maritime themes).
-- **Accessibility**: Advanced Speech-to-Text capabilities for easier interaction.
+Proyek ini lebih dari sekadar alat penerjemah biasa, melainkan berfungsi sebagai etalase budaya digital. Aplikasi ini mengintegrasikan teknologi web modern dengan estetika tradisional, menampilkan:
+- **Visual 3D Interaktif**: Pemandangan 3D berbasis partikel yang ditenagai oleh Three.js.
+- **Identitas Budaya**: Filosofi desain yang berakar pada warisan Madura (Tema Batik dan Maritim).
+- **Aksesibilitas**: Fitur Speech-to-Text canggih untuk interaksi yang lebih mudah.
 
-**Academic Context**
-This project was developed as a Final Project for the **Natural Language Processing (NLP)** course by **Kelompok I - Teknologi Sains Data, Universitas Airlangga**.
+**Konteks Akademik**
+Proyek ini dikembangkan sebagai Tugas Akhir (Final Project) untuk mata kuliah **Pemrosesan Bahasa Alami (NLP)** oleh **Kelompok I - Teknologi Sains Data, Universitas Airlangga**.
 
-## ✨ Key Features
+## ✨ Fitur Utama
 
-### 🤖 Intelligent Translation & Speech
-* **🔄 Bidirectional NMT**: Powered by **HuggingFace Transformers** and **PyTorch**, the model provides accurate translation from Indonesian to Madura and vice versa.
-* **🎙️ Advanced Speech-to-Text (STT)**: Integrated with **OpenAI Whisper (Small Model)**. This upgrade allows for significantly better recognition of Indonesian and Madurese dialects compared to standard models, complete with real-time error feedback and robust **FFmpeg** processing.
+### 🤖 Penerjemahan Cerdas & Suara
+* **🔄 NMT Dua Arah**: Ditenagai oleh **HuggingFace Transformers** dan **PyTorch**, model ini menyediakan terjemahan akurat dari Bahasa Indonesia ke Madura dan sebaliknya.
+* **🎙️ Speech-to-Text (STT) Canggih**: Terintegrasi dengan **OpenAI Whisper (Small Model)**. Peningkatan ini memungkinkan pengenalan dialek Indonesia dan Madura yang jauh lebih baik dibandingkan model standar, lengkap dengan umpan balik kesalahan waktu nyata (real-time error feedback) dan pemrosesan **FFmpeg** yang andal.
 
-### 🎨 Immersive Cultural UI/UX
-* **Modern Aesthetics**: A professional color palette combining a **Maroon** base with **Gold (Batik)** and **Teal (Maritime)** accents, replacing generic styles with true Madurese vibrancy.
-* **Batik Integration**: Backgrounds infused with subtle geometric Madurese batik motifs.
-* **Visual Experience**:
-    * **3D Particle System**: Interactive geometric animations using `Three.js`.
-    * **Dark Mode 2.0**: Optimized for readability with lighter backgrounds (`#1a1212`) and refined card opacity.
-    * **Glassmorphism**: Modern, frosted-glass UI elements with clean, professional borders.
+### 🎨 UI/UX Budaya yang Imersif
+* **Estetika Modern**: Palet warna profesional yang menggabungkan dasar **Maroon** dengan aksen **Emas (Batik)** dan **Teal (Maritim)**, menggantikan gaya umum dengan nuansa asli Madura yang hidup.
+* **Integrasi Batik**: Latar belakang yang dihiasi dengan motif batik geometris halus khas Madura.
+* **Pengalaman Visual**:
+    * **Sistem Partikel 3D**: Animasi geometris interaktif menggunakan `Three.js`.
+    * **Mode Gelap 2.0**: Dioptimalkan untuk keterbacaan dengan latar belakang yang lebih terang (`#1a1212`) dan opasitas kartu yang disempurnakan.
+    * **Glassmorphism**: Elemen UI kaca buram modern dengan batas (border) yang bersih dan profesional.
 
-## 🛠️ Technology Stack
+## 🛠️ Teknologi yang Digunakan
 
 ### Backend & AI
-* **Python**: Core programming language.
-* **Flask**: Web framework for serving the application and API.
-* **PyTorch**: Deep learning framework used for the NMT model.
-* **Transformers**: Library for the translation model architecture.
-* **OpenAI Whisper**: State-of-the-art Speech-to-Text model.
-* **FFmpeg**: Essential tool for audio processing and conversion.
+* **Python**: Bahasa pemrograman inti.
+* **Flask**: Framework web untuk menjalankan aplikasi dan API.
+* **PyTorch**: Framework deep learning yang digunakan untuk model NMT.
+* **Transformers**: Pustaka untuk arsitektur model terjemahan.
+* **OpenAI Whisper**: Model Speech-to-Text mutakhir.
+* **FFmpeg**: Alat penting untuk pemrosesan dan konversi audio.
 
 ### Frontend
-* **HTML5 & CSS3**: Custom styling with a focus on responsive, cultural design.
-* **JavaScript (ES6+)**: Dynamic interactions and API handling.
-* **Three.js**: Rendering 3D cultural scenes and particle animations.
-* **FontAwesome**: For UI icons.
+* **HTML5 & CSS3**: Penataan gaya kustom dengan fokus pada desain responsif dan budaya.
+* **JavaScript (ES6+)**: Interaksi dinamis dan penanganan API.
+* **Three.js**: Rendering pemandangan budaya 3D dan animasi partikel.
+* **FontAwesome**: Untuk ikon antarmuka pengguna (UI).
 
-## 🚀 Getting Started
+## 🚀 Memulai (Getting Started)
 
-Follow these steps to run the project locally.
+Ikuti langkah-langkah berikut untuk menjalankan proyek secara lokal.
 
-### Prerequisites
+### Prasyarat
 * Python 3.8+
-* pip (Python package manager)
-* **FFmpeg**: Must be installed on your system and added to PATH (required for Whisper STT).
+* pip (manajer paket Python)
+* **FFmpeg**: Harus terinstal di sistem Anda dan ditambahkan ke PATH (diperlukan untuk Whisper STT).
 
-### Installation
+### Instalasi
 
-1.  **Clone the repository**
+1.  **Clone repositori**
     ```bash
     git clone [https://github.com/addaan1/indo-madura-nlp](https://github.com/addaan1/indo-madura-nlp)
     cd indo-madura-nlp
     ```
 
-2.  **Create a Virtual Environment (Recommended)**
+2.  **Buat Virtual Environment (Disarankan)**
     ```bash
     python -m venv venv
     # Windows
@@ -72,44 +72,44 @@ Follow these steps to run the project locally.
     source venv/bin/activate
     ```
 
-3.  **Install Dependencies**
+3.  **Instal Dependensi**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Run the Application**
+4.  **Jalankan Aplikasi**
     ```bash
     python app.py
     ```
 
-5.  **Access the Web App**
-    Open your browser and navigate to: `http://127.0.0.1:5000`
+5.  **Akses Web App**
+    Buka browser dan kunjungi: `http://127.0.0.1:5000`
 
-## 📂 Project Structure
+## 📂 Struktur Proyek
 
 ```text
 NLP-Final-Project/
-├── app.py              # Main Flask application
-├── utils.py            # Helper functions (translation logic, Whisper audio processing)
-├── requirements.txt    # Python dependencies
-├── static/             # Static assets
+├── app.py              # Aplikasi utama Flask
+├── utils.py            # Fungsi pembantu (logika terjemahan, pemrosesan audio Whisper)
+├── requirements.txt    # Dependensi Python
+├── static/             # Aset statis
 │   ├── css/            # Stylesheets (style.css, opening.css)
-│   ├── js/             # JavaScript files (3d_scene.js, animations.js)
-│   └── images/         # Image assets
-└── templates/          # HTML templates
-    ├── base.html       # Base layout
-    └── index.html      # Main landing page
+│   ├── js/             # File JavaScript (3d_scene.js, animations.js)
+│   └── images/         # Aset gambar
+└── templates/          # Template HTML
+    ├── base.html       # Layout dasar
+    └── index.html      # Halaman utama (landing page)
 ```
 
-## 👥 Authors
+## 👥 Penulis
 
 **Kelompok I — Teknologi Sains Data, Universitas Airlangga**
 
-* **Ghaly Anargya Azzam Rifqi Nahindra** - *Model Development*
-* **Sahrul Adicandra Effendy** - *Backend & Frontend Development*
-* **Adinda Syarifatul Muna** - *Team Management & Model Development*
-* **Fatma Hidayatul Khusna** - *Project Coordination*
-* **Pradipta Deska Pryanda** - *Idea & Inspiration*
+* **Ghaly Anargya Azzam Rifqi Nahindra** - *Pengembangan Model*
+* **Sahrul Adicandra Effendy** - *Pengembangan Backend & Frontend*
+* **Adinda Syarifatul Muna** - *Manajemen Tim & Pengembangan Model*
+* **Fatma Hidayatul Khusna** - *Koordinasi Proyek*
+* **Pradipta Deska Pryanda** - *Ide & Inspirasi*
 
 ## 📝 Catatan Pengumpulan Final Project
 
@@ -120,16 +120,11 @@ NLP-Final-Project/
 
 **Ringkasan Library Utama**
 1. **Flask**: Web Server.
-2. **Transformers**: Model Architecture.
-3. **PyTorch**: Deep Learning Framework.
-4. **OpenAI Whisper**: Speech-to-Text Engine.
-5. **FFmpeg**: Audio Processing.
+2. **Transformers**: Arsitektur Model.
+3. **PyTorch**: Framework Deep Learning.
+4. **OpenAI Whisper**: Mesin Speech-to-Text.
+5. **FFmpeg**: Pemrosesan Audio.
 
-## 📄 License
+## 📄 Lisensi
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-<br>
-<p align="center">
-  <i>Created with ❤️ for Indonesian Culture</i>
-</p>
+Proyek ini dilisensikan di bawah Lisensi MIT - lihat file [LICENSE](LICENSE) untuk detailnya.
