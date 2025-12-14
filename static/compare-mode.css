@@ -1,0 +1,110 @@
+/* ===== COMPARE MODE STYLING ===== */
+
+/* Compare Toggle Wrapper */
+.compare-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+/* Hide default checkbox */
+.compare-checkbox {
+    display: none;
+}
+
+/* Toggle Label */
+.compare-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Toggle Slider (Switch) */
+.toggle-slider {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background: rgba(100, 100, 100, 0.3);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1.5px solid rgba(147, 112, 219, 0.4);
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #9370DB;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Checked State */
+.compare-checkbox:checked+.compare-label .toggle-slider {
+    background: rgba(147, 112, 219, 0.4);
+    border-color: #9370DB;
+}
+
+.compare-checkbox:checked+.compare-label .toggle-slider::before {
+    left: 26px;
+    background: #B19CD9;
+}
+
+/* Toggle Text */
+.toggle-text {
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+    letter-spacing: 0.5px;
+}
+
+[data-theme="light"] .toggle-text {
+    color: #444;
+}
+
+/* Hover Effects */
+.compare-label:hover .toggle-slider {
+    border-color: #9370DB;
+}
+
+/* Output Section Container */
+.output-section {
+    width: 100%;
+    position: relative;
+}
+
+/* Single Output (default) */
+.single-output {
+    width: 100%;
+}
+
+/* Compare Outputs Container */
+.compare-outputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+.compare-output {
+    width: 100%;
+}
+
+/* Mobile Responsiveness for Compare Mode */
+@media (max-width: 768px) {
+    .compare-outputs {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .toggle-text {
+        font-size: 0.85rem;
+    }
+}

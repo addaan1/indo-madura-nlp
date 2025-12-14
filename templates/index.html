@@ -16,7 +16,7 @@
         <header class="app-header">
             <div class="logo-area">
                 <i class="fa-solid fa-language logo-icon"></i>
-                <h2>MODEL TRANSLASI</h2>
+                <h2>PENERJEMAH BAHASA</h2>
             </div>
             <p class="subtitle">Didukung oleh Cendol-mT5 ID–MAD</p>
         </header>
@@ -34,10 +34,27 @@
 
                 <div class="select-wrapper" id="model-wrapper">
                     <select id="modelSelect">
-                        <option value="base">Cendol-mT5 Base (15ep)</option>
-                        <option value="mix">Cendol-mT5 Mix (In-Mad)</option>
+                        <option value="base">Cendol-mT5 Small (Dataset NusaX)</option>
+                        <option value="mix">Cendol-mT5 Small (Dataset In-Mad)</option>
+                        <option value="byt5">ByT5 (Dataset In-Mad)</option>
                     </select>
-                    <i class="fa-solid fa-microchip select-icon"></i>
+                    <div class="tooltip-container">
+                        <i class="fa-solid fa-circle-info info-icon"></i>
+                        <div class="tooltip-box">
+                            <div class="tooltip-item">
+                                <strong>Dataset NusaX:</strong>
+                                <p>Lebih akurat untuk bahasa formal/baku. Cocok untuk dokumen resmi.</p>
+                            </div>
+                            <div class="tooltip-item">
+                                <strong>Dataset In-Mad:</strong>
+                                <p>Lebih natural untuk percakapan sehari-hari. Cocok untuk chat/dialog.</p>
+                            </div>
+                            <div class="tooltip-item">
+                                <strong>Model ByT5:</strong>
+                                <p>Model berbasis karakter, bagus untuk menangani typo atau kata tidak baku.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -58,8 +75,18 @@
                     </div>
                 </div>
 
+
                 <!-- Action Section -->
                 <div class="action-wrapper">
+                    <!-- Compare Mode Toggle -->
+                    <div class="compare-toggle-wrapper">
+                        <input type="checkbox" id="compareMode" class="compare-checkbox">
+                        <label for="compareMode" class="compare-label">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-text">Bandingkan Model</span>
+                        </label>
+                    </div>
+
                     <button id="translateBtn" class="primary-btn">
                         <span>TERJEMAHKAN</span>
                         <i class="fa-solid fa-bolt"></i>
@@ -67,52 +94,60 @@
                 </div>
 
                 <!-- Output Section -->
-                <div class="text-area-wrapper output-wrapper">
-                    <div class="area-header">
-                        <span class="label">:: HASIL TERJEMAHAN</span>
-                        <button id="copyBtn" class="icon-btn" title="Salin Teks">
-                            <i class="fa-regular fa-copy"></i>
-                        </button>
+                <div class="output-section">
+                    <!-- Single Mode Output (default) -->
+                    <div class="text-area-wrapper output-wrapper single-output" id="singleOutput">
+                        <div class="area-header">
+                            <span class="label">:: HASIL TERJEMAHAN</span>
+                            <button id="copyBtn" class="icon-btn" title="Salin Teks">
+                                <i class="fa-solid fa-copy"></i>
+                            </button>
+                        </div>
+                        <textarea id="outputText" readonly placeholder="Hasil terjemahan..."></textarea>
+                        <div class="corner-decoration top-left"></div>
+                        <div class="corner-decoration bottom-right"></div>
                     </div>
-                    <textarea id="outputText" readonly placeholder="Hasil terjemahan..."></textarea>
 
-                    <!-- Confidence Score Display -->
-                    <div id="scoreDisplay" class="score-display hidden">
-                        <span class="score-label">Confidence Score:</span>
-                        <span id="scoreValue" class="score-value">0%</span>
+                    <!-- Compare Mode Outputs (hidden by default) -->
+                    <div class="compare-outputs" id="compareOutputs" style="display: none;">
+                        <div class="text-area-wrapper output-wrapper compare-output">
+                            <div class="area-header">
+                                <span class="label">:: MODEL</span>
+                                <select id="compareModel1" class="compare-model-select">
+                                    <option value="base">Cendol-mT5 (NusaX)</option>
+                                    <option value="mix">Cendol-mT5 (In-Mad)</option>
+                                    <option value="byt5">ByT5 (In-Mad)</option>
+                                </select>
+                                <button class="icon-btn copy-compare" data-target="1" title="Salin Teks">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+                            </div>
+                            <textarea id="outputCompare1" readonly placeholder="Hasil terjemahan..."></textarea>
+                            <div class="corner-decoration top-left"></div>
+                            <div class="corner-decoration bottom-right"></div>
+                        </div>
+
+                        <div class="text-area-wrapper output-wrapper compare-output">
+                            <div class="area-header">
+                                <span class="label">:: MODEL</span>
+                                <select id="compareModel2" class="compare-model-select">
+                                    <option value="base">Cendol-mT5 (NusaX)</option>
+                                    <option value="mix" selected>Cendol-mT5 (In-Mad)</option>
+                                    <option value="byt5">ByT5 (In-Mad)</option>
+                                </select>
+                                <button class="icon-btn copy-compare" data-target="2" title="Salin Teks">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+                            </div>
+                            <textarea id="outputCompare2" readonly placeholder="Hasil terjemahan..."></textarea>
+                            <div class="corner-decoration top-left"></div>
+                            <div class="corner-decoration bottom-right"></div>
+                        </div>
                     </div>
-
-                    <div class="corner-decoration top-right"></div>
-                    <div class="corner-decoration bottom-left"></div>
                 </div>
             </div>
 
-            <!-- Word Recommendations (Full Width) -->
-            <div class="recommendation-area">
-                <span class="rec-label">Rekomendasi Kata:</span>
-                <div class="chips-container">
-                    <button class="chip" onclick="addText('Saya')">Saya</button>
-                    <button class="chip" onclick="addText('Makan')">Makan</button>
-                    <button class="chip" onclick="addText('Pergi')">Pergi</button>
-                    <button class="chip" onclick="addText('Pulang')">Pulang</button>
-                    <button class="chip" onclick="addText('Tidur')">Tidur</button>
-                    <button class="chip" onclick="addText('Rumah')">Rumah</button>
-                    <button class="chip" onclick="addText('Pasar')">Pasar</button>
-                    <button class="chip" onclick="addText('Sekolah')">Sekolah</button>
-                    <button class="chip" onclick="addText('Sakit')">Sakit</button>
-                    <button class="chip" onclick="addText('Bapak')">Bapak</button>
-                    <button class="chip" onclick="addText('Ibu')">Ibu</button>
-                    <button class="chip" onclick="addText('Kakak')">Kakak</button>
-                    <button class="chip" onclick="addText('Adik')">Adik</button>
-                    <button class="chip" onclick="addText('Sapi')">Sapi</button>
-                    <button class="chip" onclick="addText('Air')">Air</button>
-                    <button class="chip" onclick="addText('Nasi')">Nasi</button>
-                    <button class="chip" onclick="addText('Uang')">Uang</button>
-                    <button class="chip" onclick="addText('Guru')">Guru</button>
-                    <button class="chip" onclick="addText('Madura')">Madura</button>
-                    <button class="chip" onclick="addText('Terima Kasih')">Terima Kasih</button>
-                </div>
-            </div>
+
 
         </div>
     </div>
@@ -128,16 +163,7 @@
     const charCount = document.querySelector('.char-count');
 
     // Function for Word Chips
-    function addText(text) {
-        if (inputText) {
-            // Append with space if needed
-            if (inputText.value && !inputText.value.endsWith(' ')) {
-                inputText.value += ' ';
-            }
-            inputText.value += text;
-            inputText.dispatchEvent(new Event('input')); // Trigger char count update
-        }
-    }
+
 
     if (inputText) {
         inputText.addEventListener('input', () => {
@@ -156,16 +182,14 @@
         });
     }
 
-    // --- Translation Logic ---
+    // Translation Button with Compare Mode Support
     const translateBtn = document.getElementById('translateBtn');
     if (translateBtn) {
         translateBtn.addEventListener('click', async () => {
             const text = document.getElementById('inputText').value;
             const direction = document.getElementById('direction').value;
             const model = document.getElementById('modelSelect').value;
-            const outputText = document.getElementById('outputText');
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            const scoreValue = document.getElementById('scoreValue');
+            const compareMode = document.getElementById('compareMode').checked;
             const btn = document.getElementById('translateBtn');
 
             if (!text.trim()) return;
@@ -173,42 +197,103 @@
             // Loading State
             btn.disabled = true;
             btn.classList.add('loading');
-            outputText.classList.add('pulse');
-            scoreDisplay.classList.add('hidden'); // Hide score during loading
             const originalText = btn.querySelector('span').textContent;
             btn.querySelector('span').textContent = "PROCESSING...";
 
             try {
-                const response = await fetch('/translate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text, direction, model }),
-                });
+                if (compareMode) {
+                    // Compare Mode: Get selected models from dropdowns
+                    const model1 = document.getElementById('compareModel1').value;
+                    const model2 = document.getElementById('compareModel2').value;
 
-                const data = await response.json();
-                outputText.value = data.translated_text;
+                    const [response1, response2] = await Promise.all([
+                        fetch('/translate', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text, direction, model: model1 }),
+                        }),
+                        fetch('/translate', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text, direction, model: model2 }),
+                        })
+                    ]);
 
-                // Display Score
-                if (data.score !== undefined) {
-                    scoreValue.textContent = `${data.score}%`;
-                    scoreDisplay.classList.remove('hidden');
+                    const data1 = await response1.json();
+                    const data2 = await response2.json();
 
-                    // Color code based on score
-                    if (data.score > 80) scoreValue.style.color = '#4CAF50';
-                    else if (data.score > 50) scoreValue.style.color = '#FFC107';
-                    else scoreValue.style.color = '#FF5252';
+                    // Update Model 1 output
+                    document.getElementById('outputCompare1').value = data1.translated_text;
+
+                    // Update Model 2 output
+                    document.getElementById('outputCompare2').value = data2.translated_text;
+                } else {
+                    // Single Mode
+                    const response = await fetch('/translate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text, direction, model }),
+                    });
+
+                    const data = await response.json();
+                    const outputText = document.getElementById('outputText');
+
+                    outputText.value = data.translated_text;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                outputText.value = 'Error occurred during translation.';
+                alert('Translation failed. Please try again.');
             } finally {
                 btn.disabled = false;
                 btn.classList.remove('loading');
-                outputText.classList.remove('pulse');
                 btn.querySelector('span').textContent = originalText;
             }
         });
     }
+
+    // Compare Mode Toggle Handler
+    const compareModeCheckbox = document.getElementById('compareMode');
+    const singleOutput = document.getElementById('singleOutput');
+    const compareOutputs = document.getElementById('compareOutputs');
+    const translationGrid = document.querySelector('.translation-grid');
+
+    if (compareModeCheckbox && singleOutput && compareOutputs) {
+        compareModeCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                singleOutput.style.display = 'none';
+                compareOutputs.style.display = 'grid';
+                if (translationGrid) {
+                    translationGrid.classList.add('compare-active');
+                }
+            } else {
+                singleOutput.style.display = 'block';
+                compareOutputs.style.display = 'none';
+                if (translationGrid) {
+                    translationGrid.classList.remove('compare-active');
+                }
+            }
+        });
+    }
+
+    // Copy buttons for compare mode
+    document.querySelectorAll('.copy-compare').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const target = this.getAttribute('data-target');
+            const textArea = document.getElementById(`outputCompare${target}`);
+            if (textArea && textArea.value) {
+                navigator.clipboard.writeText(textArea.value).then(() => {
+                    const icon = this.querySelector('i');
+                    icon.classList.remove('fa-copy');
+                    icon.classList.add('fa-check');
+                    setTimeout(() => {
+                        icon.classList.remove('fa-check');
+                        icon.classList.add('fa-copy');
+                    }, 1500);
+                });
+            }
+        });
+    });
+
 
     // --- Audio Recording Logic ---
     const micBtn = document.getElementById('micBtn');

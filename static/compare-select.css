@@ -1,0 +1,34 @@
+/* Compare Model Selector in Headers */
+.compare-model-select {
+    background: rgba(147, 112, 219, 0.25);
+    border: 1px solid #9370DB;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: var(--font-header);
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.compare-model-select:hover {
+    background: rgba(147, 112, 219, 0.4);
+    box-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
+}
+
+.compare-model-select option {
+    background: #1a1a1a;
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .compare-model-select {
+    background: rgba(147, 112, 219, 0.15);
+    color: #4A2C6B;
+    border-color: #7B51A8;
+}
+
+[data-theme="light"] .compare-model-select option {
+    background: #ffffff;
+    color: #1a1a1a;
+}

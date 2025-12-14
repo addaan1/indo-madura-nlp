@@ -7,7 +7,8 @@ class Translator:
         # Define available models
         self.AVAILABLE_MODELS = {
             "base": "addinda/cendol-mt5-id-mad-15ep",
-            "mix": "addinda/cendol-mt5-id-mad-inmad-mix"
+            "mix": "addinda/cendol-mt5-id-mad-inmad-mix",
+            "byt5": "addinda/ByT5-id-mad"
         }
         self.current_model_key = None
         self.model = None
