@@ -1460,57 +1460,7 @@ footer {
     user-select: none;
 }
 
-/* Toggle Slider (Switch) */
-.toggle-slider {
-    position: relative;
-    width: 50px;
-    height: 26px;
-    background: rgba(100, 100, 100, 0.3);
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    border: 1.5px solid rgba(147, 112, 219, 0.4);
-}
 
-.toggle-slider::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
-    background: #9370DB;
-    border-radius: 50%;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Checked State */
-.compare-checkbox:checked+.compare-label .toggle-slider {
-    background: rgba(147, 112, 219, 0.4);
-    border-color: #9370DB;
-}
-
-.compare-checkbox:checked+.compare-label .toggle-slider::before {
-    left: 26px;
-    background: #B19CD9;
-}
-
-/* Toggle Text */
-.toggle-text {
-    color: var(--text-main);
-    font-size: 0.95rem;
-    font-family: var(--font-main);
-    letter-spacing: 0.5px;
-}
-
-[data-theme="light"] .toggle-text {
-    color: #444;
-}
-
-/* Hover Effects */
-.compare-label:hover .toggle-slider {
-    border-color: #9370DB;
-}
 
 /* Output Section Container */
 .output-section {
@@ -1524,28 +1474,7 @@ footer {
 }
 
 /* Compare Outputs Container */
-.compare-outputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    width: 100%;
-}
 
-.compare-output {
-    width: 100%;
-}
-
-/* Mobile Responsiveness for Compare Mode */
-@media (max-width: 768px) {
-    .compare-outputs {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .toggle-text {
-        font-size: 0.85rem;
-    }
-}
 
 /* Translation Grid - Fixed width normally, expands in compare mode */
 .translation-grid {
@@ -1560,10 +1489,7 @@ footer {
 }
 
 /* When compare mode is active, expand the grid */
-.translation-grid.compare-active {
-    max-width: 98%;
-    grid-template-columns: 1fr auto 2fr;
-}
+
 
 /* Input and Output sections */
 .input-section,
@@ -1579,48 +1505,4 @@ footer {
     justify-content: flex-start;
     gap: 15px;
     padding-top: 60px;
-}
-
-/* Compare Model Selector in Headers */
-.compare-model-select {
-    background: rgba(147, 112, 219, 0.25);
-    border: 1px solid #9370DB;
-    color: #FFFFFF;
-    padding: 6px 10px;
-    /* Reduced padding */
-    border-radius: 8px;
-    font-size: 0.85rem;
-    /* Reduced font size */
-    font-family: var(--font-header);
-    cursor: pointer;
-    margin: 0 5px;
-    transition: all 0.3s ease;
-    min-width: 120px;
-    /* Reduced min-width */
-    max-width: 180px;
-    /* Reduced max-width */
-    flex-shrink: 1;
-    /* Allow shrinking */
-    font-weight: 600;
-}
-
-.compare-model-select:hover {
-    background: rgba(147, 112, 219, 0.4);
-    box-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
-}
-
-.compare-model-select option {
-    background: #1a1a1a;
-    color: #FFFFFF;
-}
-
-[data-theme="light"] .compare-model-select {
-    background: rgba(147, 112, 219, 0.15);
-    color: #4A2C6B;
-    border-color: #7B51A8;
-}
-
-[data-theme="light"] .compare-model-select option {
-    background: #ffffff;
-    color: #1a1a1a;
 }

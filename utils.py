@@ -6,16 +6,16 @@ class Translator:
     def __init__(self):
         # Define available models
         self.AVAILABLE_MODELS = {
-            "base": "addinda/cendol-mt5-id-mad-15ep",
-            "mix": "addinda/cendol-mt5-id-mad-inmad-mix",
-            "byt5": "addinda/ByT5-id-mad"
+            "mad_to_indo": "addinda/google-mt5-madura-indo",
+            "indo_to_mad": "addinda/cendol-mt5-id-mad-inmad-mix"
         }
         self.current_model_key = None
         self.model = None
         self.tokenizer = None
         
-        # Load default model initially
-        self.load_model("base")
+        # We don't load a default model initially to save resources until first request
+        # or we can load one default. Let's load indo_to_mad as default.
+        self.load_model("indo_to_mad")
 
     def load_model(self, model_key):
         """Loads the specified model if not already loaded."""
@@ -47,22 +47,27 @@ class Translator:
             self.current_model_key = None
             return False, str(e)
 
-    def translate(self, text, direction, model_key="base"):
+    def translate(self, text, direction):
         """
         Translates text using the specified model.
         Args:
             text (str): Text to translate.
             direction (str): 'id_to_mad' or 'mad_to_id'.
-            model_key (str): Key of the model to use ('base' or 'mix').
         Returns:
             dict: {'text': translated_text, 'score': confidence_score}
         """
         if not text:
             return {'text': "", 'score': 0.0}
 
+        # Determine model key based on direction
+        if direction == 'mad_to_id':
+             target_model_key = "mad_to_indo"
+        else:
+             target_model_key = "indo_to_mad"
+
         # Ensure correct model is loaded
-        if self.current_model_key != model_key:
-            success, msg = self.load_model(model_key)
+        if self.current_model_key != target_model_key:
+            success, msg = self.load_model(target_model_key)
             if not success:
                 return {'text': f"Error loading model: {msg}", 'score': 0.0}
             
