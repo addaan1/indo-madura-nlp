@@ -1,6 +1,122 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 import math
+import re
+import csv
+import os
+
+class LanguageDetector:
+    def __init__(self):
+        self.indo_keywords = set()
+        self.madura_keywords = set()
+        # Distinctive Madurese character sequences (digraphs/special chars)
+        self.madura_markers = ['â', 'è', 'bh', 'dh', 'jh', 'gh', "o'"]
+        
+        self.load_vocabulary()
+
+    def load_vocabulary(self):
+        """Loads vocabulary from datasets to build usage frequency/uniqueness."""
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        # List of dataset files
+        files = [
+            "Dataset/train.csv",
+            "Dataset/test (1).csv",
+            "Dataset/valid.csv",
+            "Dataset/madurese.csv"
+        ]
+        
+        all_indo_words = set()
+        all_madura_words = set()
+        
+        print("Loading datasets for language detection...")
+        for rel_path in files:
+            full_path = os.path.join(base_path, rel_path)
+            if not os.path.exists(full_path):
+                print(f"Warning: Dataset not found at {full_path}")
+                continue
+                
+            try:
+                with open(full_path, mode='r', encoding='utf-8', errors='ignore') as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        # Normalize headers: remove spaces, lowercase
+                        clean_row = {k.strip().lower(): v for k, v in row.items() if k}
+                        
+                        # Extract Indonesian words
+                        if 'indonesian' in clean_row and clean_row['indonesian']:
+                             words = self._tokenize(clean_row['indonesian'])
+                             all_indo_words.update(words)
+                             
+                        # Extract Madurese words
+                        if 'madurese' in clean_row and clean_row['madurese']:
+                             words = self._tokenize(clean_row['madurese'])
+                             all_madura_words.update(words)
+            except Exception as e:
+                print(f"Error reading {rel_path}: {e}")
+
+        # Determine unique keywords (words that generally appear only in one language)
+        # We start with proper unique set difference
+        self.indo_keywords = all_indo_words - all_madura_words
+        self.madura_keywords = all_madura_words - all_indo_words
+        
+        print(f"Language Detection Ready. Loaded {len(self.indo_keywords)} unique Indo words and {len(self.madura_keywords)} unique Madura words.")
+
+    def _tokenize(self, text):
+        """Simple tokenizer that lowers case and keeps apostrophes."""
+        text = text.lower()
+        # Remove non-alphanumeric chars except apostrophe
+        text = re.sub(r"[^\w\s']", ' ', text)
+        return text.split()
+
+
+    def detect(self, text):
+        """
+        Detects if text is likely 'mad' (Madurese) or 'id' (Indonesian).
+        Returns tuple: ('mad'/'id'/'ambiguous', float_ratio_of_madura)
+        """
+        if not text:
+            return 'ambiguous', 0.0
+
+            
+        text_lower = text.lower()
+        
+        # 1. Check for strong Madurese orthography markers
+        # These are very specific to the dataset/spelling used
+        for marker in self.madura_markers:
+            if marker in text_lower:
+                return 'mad', 1.0
+
+
+        # 2. Tokenize (simple split by non-word chars, keeping apostrophes for Madurese like lo', sengko')
+        # We replace punctuation (except apostrophe) with space
+        clean_text = re.sub(r"[^\w\s']", ' ', text_lower)
+        tokens = set(clean_text.split())
+        
+        # 3. Keyword intersection
+        madura_matches = tokens.intersection(self.madura_keywords)
+        indo_matches = tokens.intersection(self.indo_keywords)
+        
+        madura_score = len(madura_matches)
+        indo_score = len(indo_matches)
+        
+        madura_score = len(madura_matches)
+        indo_score = len(indo_matches)
+        total_score = madura_score + indo_score
+        
+        if total_score == 0:
+             return 'ambiguous', 0.0
+             
+        # Calculate Madurese Ratio (Madurese / Total Detected)
+        madura_ratio = madura_score / total_score
+        
+        if madura_ratio > 0.5:
+            return 'mad', madura_ratio
+        elif madura_ratio < 0.5:
+            return 'id', madura_ratio
+        else:
+            return 'ambiguous', 0.5
+
+
 
 class Translator:
     def __init__(self):
@@ -15,7 +131,9 @@ class Translator:
         
         # We don't load a default model initially to save resources until first request
         # or we can load one default. Let's load indo_to_mad as default.
+        self.detector = LanguageDetector()
         self.load_model("indo_to_mad")
+
 
     def load_model(self, model_key):
         """Loads the specified model if not already loaded."""
@@ -58,6 +176,24 @@ class Translator:
         """
         if not text:
             return {'text': "", 'score': 0.0}
+
+        # --- Language Detection Check ---
+        detected_lang, madura_ratio = self.detector.detect(text)
+        print(f"Input: '{text}' | Detected: {detected_lang} (MadRatio: {madura_ratio:.2f}) | Direction: {direction}")
+        
+        # Prevent redundant translation:
+        # If User wants ID->Mad, but inputs Madurese (>50% match) -> Return Input
+        if direction == 'id_to_mad' and madura_ratio > 0.5:
+            print("Skipping translation: Input detected as Madurese (>50%).")
+            return {'text': text, 'score': 100.0}
+            
+        # If User wants Mad->ID, but inputs Indonesian (<50% Madurese match, i.e., >50% Indo) -> Return Input
+        if direction == 'mad_to_id' and madura_ratio < 0.5 and detected_lang != 'ambiguous':
+            print("Skipping translation: Input detected as Indonesian (>50%).")
+            return {'text': text, 'score': 100.0}
+        # --------------------------------
+
+
 
         # Determine model key based on direction
         if direction == 'mad_to_id':
